@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# A mini Kollin project
 
-First, run the development server:
+## Introduction
+Kollin is a startup that provides accessible and interactive study material to university students. Our mission is to make studying at the university more fun and engaging for everyone!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### A little bit about our tech stack
+
+
+## The task
+
+### Objective
+The objective is to create a view that displays a list of Exercises, the user can click on an exercise in the list to view it. Each exercise is a Multiple-choice-question, the user can select an option and press a button to check if their answer is correct. Kind of like Duolingo if you have used it!
+
+### Mockup
+
+![](mockup.png)
+
+Please see the full interactive figma mockup here:
+https://www.figma.com/file/9rDWfun0I1TdEfQt5vM4kD/Untitled?type=design&node-id=1%3A6669&mode=design&t=sqgMG34VPQ82y9zs-1
+
+### Instructions
+Please see referred resources in the [Resources](#resources) section below
+
+1. Fork this repository
+[Optional] install a component library of your choice (or use custom-built components)
+    
+   > We are currently using: Next UI (https://nextui.org/)
+
+2. Create the exercise list in app/practice/page.jsx
+
+3. Get the exercises from the API 
+   - See: [R1](#r1-graphql-api) for GraphQL API access
+   - See: [R2](#r2-exercises) section for data structure specification [] 
+4. Render the list of exercises 
+5. Automatically redirect to the first exercise in the list. 
+   - The list of exercises should remain intact.
+   - When the user clicks on an exercise: redirect to that exercise
+6. Show the selected Exercise and all metadata 
+7. Show the interactive options
+8. Provide feedback to the user if they answered correctly or incorrectly when they submit 
+9. Reflect their progress in the list of exercises 
+10. The user has 3 hearts, if they answer incorrectly they lose a heart. 
+    > If they lose all hearts, show a message that they have lost and show an overview of their progress
+
+---
+
+## Resources
+
+### R1. GraphQL API
+
+We use GraphQL for most of our data fetching. You can access the API at the following endpoint:
+
+```
+    https://jgsbshesm5advigzznyid7juny.appsync-api.eu-north-1.amazonaws.com/graphql
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You'll need to authenticate with the following header:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```js
+    {
+        Authorization: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhTVVAwa3ZaUHl3S296bkU1SkNGMW1KbnJnT29CdTRjVHBTMDViQWc4RXMifQ.eyJzdWIiOiItMSIsImlkIjotMSwiZiI6IiIsIm1heEFsbG93ZWREZXZpY2VzIjoyLCJncm91cHMiOlsiUFVCTElDIl0sImF1ZCI6ImludGVybmFsIiwiZXhwIjoyMDU0NjQwNjgzLCJpYXQiOjE3MDczMDQ4MjcsImlzcyI6Imh0dHBzOi8vYXBpLnRudG9yLnNlL29pZGMifQ.RRFR-x7DfY2NcMv3pmxffzn-PoeUDUCpuqeYe5eA0uznnzRY3rOBwE7YrnME3EycI1yI7hENVbjO3NoZlheGIEsI-Us1_nGr7nGKCvmmztLSi_OW23IPMJasPpLm1DGir2X0o8wxBjQkeRfQu9ipPvy7-H3J48UGQuWuEq3M7lGiR6POx1M5mWYQx3Jg55suI31TL1-X0NVNJmyCuLpeNcxAoavaDBaC7AVVQC0wMP7jLK0Vyrj270OKW0Z6mDvheXUyyxnh2NTQvUkn9CliU-h4fC4jFVvKxnfQiaAuQ9XwtUJnPh1CFJcQosLVovIrWbSQ6mk-Lg509EGXWGT33g
+    }
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The relevant queries are given below
 
-## Learn More
+ Note that in the API, an 'exercise' is called `Assignment`
 
-To learn more about Next.js, take a look at the following resources:
+```graphql
+  query GetAssignment($id: ID!) {
+    getAssignment(id: $id) {
+      id
+      difficultyScore
+      questionText
+      solutionText
+      hints
+      answerOptions {
+        id
+        text
+        correct
+      }
+      createdAt
+      updatedAt
+    }
+  }
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### R2. Exercises
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The exercises are provided in the file [exercises.json](exercises.json). One of the ID:s in the list is not valid, so you should handle this case gracefully.
 
-## Deploy on Vercel
+Here is an explanation of the fields in the Assignment object:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Field                   | Type           | Description                              |
+|-------------------------|----------------|------------------------------------------|
+| `id`                    | String         | The ID of the exercise                   |
+| `difficultyScore`       | Float          | The difficulty of the exercise [1.0-4.0] |
+| `questionText`          | String         | The question text                        |
+| `solutionText`          | String         | The solution text                        |
+| `hints`                 | Array          | Hints for the exercise                   |
+| `answerOptions`         | Array\<Object> | The answer options                       |
+| `answerOptions.id`      | String         | The ID of the answer option              |
+| `answerOptions.text`    | String         | The text of the answer option            |
+| `answerOptions.correct` | Boolean        | If the answer option is correct          |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+---
+
+## Assessment criteria:
+
+The code should be:
+- clean: no comments and linting errors
+- maintainable: easy to understand and extend
+- efficient: no unnecessary re-renders or API calls that could be avoided
+- reusable: components should be reusable and modular to avoid repetition. 
+
+## Submission
+
+Please submit your solution by creating a pull request to this repository. You can also add a README.md file to explain your solution and any additional notes you would like to add. Good luck!
+
+
+--- 
+
+
