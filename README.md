@@ -1,11 +1,24 @@
 
 # A mini Kollin project
 
-## Introduction
+
+
+
+- [A mini Kollin project](#a-mini-kollin-project)
+  - [The task](#the-task)
+    - [Objective](#objective)
+    - [Mockup](#mockup)
+    - [Instructions](#instructions)
+  - [Resources](#resources)
+    - [R1. GraphQL API](#r1-graphql-api)
+    - [R2. Exercises](#r2-exercises)
+  - [Assessment criteria](#assessment-criteria)
+  - [Submission](#submission)
+
+
+
+
 Kollin is a startup that provides accessible and interactive study material to university students. Our mission is to make studying at the university more fun and engaging for everyone!
-
-### A little bit about our tech stack
-
 
 ## The task
 
@@ -93,7 +106,7 @@ The exercises are provided in the file [exercises.json](exercises.json). One of 
 Here is an explanation of the fields in the Assignment object:
 
 | Field                   | Type           | Description                              |
-|-------------------------|----------------|------------------------------------------|
+| ----------------------- | -------------- | ---------------------------------------- |
 | `id`                    | String         | The ID of the exercise                   |
 | `difficultyScore`       | Float          | The difficulty of the exercise [1.0-4.0] |
 | `questionText`          | String         | The question text                        |
@@ -108,7 +121,7 @@ Here is an explanation of the fields in the Assignment object:
 
 ---
 
-## Assessment criteria:
+## Assessment criteria
 
 The code should be:
 - clean: no comments and linting errors
