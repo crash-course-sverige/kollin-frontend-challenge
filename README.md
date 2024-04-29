@@ -123,8 +123,9 @@ Here is an explanation of the fields in the Assignment object:
 
 ## Assessment criteria
 
-The code should be:
-- clean: no comments and linting errors
+The code should be
+
+- clean: no commented code, no linting errors and prettier formatting
 - maintainable: easy to understand and extend
 - efficient: no unnecessary re-renders or API calls that could be avoided
 - reusable: components should be reusable and modular to avoid repetition. 
