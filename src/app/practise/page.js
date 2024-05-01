@@ -27,29 +27,40 @@ const fetchExercise = async (id) => {
         variables: { id: id },
     };
 
-    const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization:
-                "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhTVVAwa3ZaUHl3S296bkU1SkNGMW1KbnJnT29CdTRjVHBTMDViQWc4RXMifQ.eyJzdWIiOiIyNjQyMSIsImlkIjoyNjQyMSwiZiI6IjlhOTJmNjMxYzNmNjNkZDgzOGNiNzZjZTcwNDZiNmM5IiwibWF4QWxsb3dlZERldmljZXMiOjEsImdyb3VwcyI6WyJQVUJMSUMiXSwiYXVkIjoiaW50ZXJuYWwiLCJleHAiOjE3MTcxMDE0MDgsImlhdCI6MTcxNDUwOTQwOCwiaXNzIjoiaHR0cHM6Ly9hcGkudG50b3Iuc2Uvb2lkYyJ9.QmNBGduFAihbzKd2ETRQ1DukxHta8_G-CRK8RHtLhAqFDcD9pcK6mbdZCRYx-TKG2Ovyi1LS7MpcG-mYNsq8kNrMOHWVgJtDNyJEjgdYQMFZwsfGikKu5KRNHHf1j8g8tYqEcT7Yw_Azv9uMeiGU1CcL1jGRBhbaqVo3G1pXCxVupHbHsKQn237DC7n2fbaiVVM2S2J1bOFSATbfj35yDJmgZzLOQWqGebl4UkfFZcgWImWcj1IwVRogrCWRK5HZbeElgIu02mlcD8XrFpOV1oFgEnMiMmHjdbgPvm_RX4-FkJTJXUXflVRQYhBFVtOH9bf-t1FTY8FM7kV19uRhHw",
-        },
-        body: JSON.stringify(QUERY),
-    });
-    const data = await response.json();
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer your-very-long-jwt-token-here",
+            },
+            body: JSON.stringify(QUERY),
+        });
 
-    if (data.errors || !data.data.getAssignment) {
-        console.error(`Error fetching exercise with ID ${id}:`, data.errors || "No data found.");
-        return { error: true, details: data.errors || "No data found" };
+        const data = await response.json();
+
+        if (data.errors || !data.data.getAssignment) {
+            console.error(`Error fetching exercise with ID ${id}:`, data.errors || "No data found.");
+            return { error: true, details: data.errors || "No data found" };
+        }
+
+        return data.data.getAssignment;
+    } catch (error) {
+        console.error(`Error fetching exercise with ID ${id}:`, error);
+        return { error: true, details: "Failed to fetch data due to an unexpected error." };
     }
-
-    return data.data.getAssignment;
 };
 
 const fetchExercises = async () => {
-    const fetchedExercises = await Promise.all(exerciseIds.map((id) => fetchExercise(id)));
-    const validExercises = fetchedExercises.filter((exercise) => !exercise.error);
-    return validExercises;
+    const fetchExercises = async () => {
+        try {
+            const fetchedExercises = await Promise.all(exerciseIds.map((id) => fetchExercise(id)));
+            const validExercises = fetchedExercises.filter((exercise) => !exercise.error);
+            return validExercises;
+        } catch (error) {
+            console.error("Failed to fetch exercises:", error);
+        }
+    };
 };
 
 const Page = async () => {
