@@ -2,7 +2,7 @@
 import { nanoid } from "nanoid";
 import Heart from "./Heart" 
 
-export function Header({ excersises, answersResult, lifes }) {
+export function Header({ excersises, answersResult, lifes, changeQuestion }) {
     return (
         <div class="flex gap-2 mb-20">
             {excersises.map((id) => {
@@ -10,7 +10,8 @@ export function Header({ excersises, answersResult, lifes }) {
                 return (
                     <div
                         key={nanoid()}
-                        className={`relative grid select-none items-center rounded-lg bg-${color}-400 px-12 py-2`}
+                        className={`relative grid select-none items-center rounded-lg bg-${color}-400 px-12 py-2 cursor-pointer`}
+                        onClick={() => changeQuestion(id)}
                     ></div>
                 );
             })}

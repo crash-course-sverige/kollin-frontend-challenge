@@ -7,8 +7,9 @@ import { RadioGroup, Radio } from "@nextui-org/react";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
 
-export function Assignment({ id, answersResult, setResult, nextQuestion, takeLife }) {
+export function Assignment({ id, answersResult, setResult, takeLife }) {
   const [selectedOption, setSelectedOption] = useState();
+  const [isCorrect, setIsCorrect] = useState();
 
   const { data, loading, error } = useQuery(GetAssignmentQuery, {
     context: {
@@ -25,11 +26,11 @@ export function Assignment({ id, answersResult, setResult, nextQuestion, takeLif
     return <div>loading.....</div>;
   }
   if (error) {
-    nextQuestion()
     return <div>{error.message}</div>;
   }
+
   if (!data.getAssignment) {
-    nextQuestion()
+    return <div>No data for this question</div>;
   }
   const answerOptions = data.getAssignment.answerOptions;
   const options = answerOptions.map((o) => ({ text: o.text, id: nanoid() }));
@@ -38,11 +39,11 @@ export function Assignment({ id, answersResult, setResult, nextQuestion, takeLif
     const correctAnswer = answerOptions.filter((o) => o.correct).pop().text;
     const newResult = {...answersResult}
     newResult[id] = correctAnswer === selectedOption
-    if (!newResult[id]) {
+    setIsCorrect(newResult[id])
+    if (!isCorrect) {
         takeLife()
     }
     setResult(newResult)
-    nextQuestion()
   };
 
   const questionText = data.getAssignment.questionText;
@@ -56,7 +57,7 @@ export function Assignment({ id, answersResult, setResult, nextQuestion, takeLif
           </p>
         </div>
       </div>
-      selected answer: {selectedOption}
+      { isCorrect !==undefined ? (isCorrect ? "Correct answer!" : "Incorrect answer!") : ""}
       <RadioGroup>
         <nav className="min-w-[80%] flex flex-col gap-2 p-2 font-sans text-base font-normal text-blue-gray-700">
           {options.map((option) => (
