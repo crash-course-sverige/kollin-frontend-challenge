@@ -1,7 +1,8 @@
 "use client";
 import { nanoid } from "nanoid";
+import Heart from "./Heart" 
 
-export function Header({ excersises, answersResult }) {
+export function Header({ excersises, answersResult, lifes }) {
     return (
         <div class="flex gap-2 mb-20">
             {excersises.map((id) => {
@@ -13,6 +14,7 @@ export function Header({ excersises, answersResult }) {
                     ></div>
                 );
             })}
+            <Heart/> {lifes}
         </div>
     );
 }
