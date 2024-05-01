@@ -2,32 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+.page {
+	padding: 20px;
+	background-color:#586FB5;
+	height: 100vh;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+h1 {
+	text-align: center;
+	
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.page-container {
+	max-width: 80vw;
+	margin: 0 auto;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.modal {
+	display: none; /* Initially hide the modal */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color:#586FB5; /* Adjust the opacity as needed */
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color:#586FB5; 
+    z-index: 9998; 
+    }
+
+.overlay.active {
+	display: block; 
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+	width: 80vw;
+	height: 80vh;
+	margin: 0 auto;
+	border-radius: 64px;
+	padding: 50px;
+	gap: 32px;
+	overflow: visible;
+}
+
+.btn-holder {
+	display: flex;
+	justify-content: space-between;
+}
+.progress-bar {
+	display: flex;
+	flex-direction: row!important;
+	flex-wrap: wrap;
+	gap: 10px;
+	width: 100%; 
+}
+
+.progress-div {
+	background-color: #e1c699;
+	height: 10px;
+	width: 70px;
+	border-radius: 10px;
 }
