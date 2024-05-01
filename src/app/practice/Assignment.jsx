@@ -5,8 +5,11 @@ import { useQuery } from "@apollo/client";
 import { nanoid } from "nanoid";
 import { RadioGroup, Radio } from "@nextui-org/react";
 import { Button } from "@nextui-org/button";
+import { useState } from "react";
 
-export function Assignment({ id }) {
+export function Assignment({ id, answersResult, setResult }) {
+  const [selectedOption, setSelectedOption] = useState();
+
   const { data, loading, error } = useQuery(GetAssignmentQuery, {
     context: {
       headers: {
@@ -24,10 +27,17 @@ export function Assignment({ id }) {
   if (error) {
     return <div>{error.message}</div>;
   }
-
-  const questionText = data.getAssignment.questionText;
   const answerOptions = data.getAssignment.answerOptions;
   const options = answerOptions.map((o) => ({ text: o.text, id: nanoid() }));
+
+  const checkHandler = () => {
+    const correctAnswer = answerOptions.filter((o) => o.correct).pop().text;
+    const newResult = {...answersResult}
+    newResult[id] = correctAnswer === selectedOption
+    setResult(newResult)
+  };
+
+  const questionText = data.getAssignment.questionText;
 
   return (
     <div>
@@ -38,7 +48,7 @@ export function Assignment({ id }) {
           </p>
         </div>
       </div>
-
+      selected answer: {selectedOption}
       <RadioGroup>
         <nav className="min-w-[80%] flex flex-col gap-2 p-2 font-sans text-base font-normal text-blue-gray-700">
           {options.map((option) => (
@@ -55,6 +65,7 @@ export function Assignment({ id }) {
                 key={nanoid()}
                 value={option.text}
                 className="min-w-[100%] "
+                onChange={() => setSelectedOption(option.text)}
               >
                 {option.text}
               </Radio>
@@ -62,7 +73,9 @@ export function Assignment({ id }) {
           ))}
         </nav>
       </RadioGroup>
-      <Button className="check-btn mt-10">Check</Button>
+      <Button onClick={checkHandler} className="check-btn mt-10">
+        Check
+      </Button>
     </div>
   );
 }
