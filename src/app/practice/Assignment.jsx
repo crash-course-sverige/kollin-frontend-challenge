@@ -7,7 +7,7 @@ import { RadioGroup, Radio } from "@nextui-org/react";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
 
-export function Assignment({ id, answersResult, setResult }) {
+export function Assignment({ id, answersResult, setResult, nextQuestion }) {
   const [selectedOption, setSelectedOption] = useState();
 
   const { data, loading, error } = useQuery(GetAssignmentQuery, {
@@ -25,7 +25,11 @@ export function Assignment({ id, answersResult, setResult }) {
     return <div>loading.....</div>;
   }
   if (error) {
+    nextQuestion()
     return <div>{error.message}</div>;
+  }
+  if (!data.getAssignment) {
+    nextQuestion()
   }
   const answerOptions = data.getAssignment.answerOptions;
   const options = answerOptions.map((o) => ({ text: o.text, id: nanoid() }));
@@ -35,6 +39,7 @@ export function Assignment({ id, answersResult, setResult }) {
     const newResult = {...answersResult}
     newResult[id] = correctAnswer === selectedOption
     setResult(newResult)
+    nextQuestion()
   };
 
   const questionText = data.getAssignment.questionText;
