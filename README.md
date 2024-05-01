@@ -36,8 +36,7 @@ https://www.figma.com/file/9rDWfun0I1TdEfQt5vM4kD/Untitled?type=design&node-id=1
 Please see referred resources in the [Resources](#resources) section below
 
 1. Fork this repository
-[Optional] install a component library of your choice (or use custom-built components)
-    
+   > [Optional] install a component library of your choice (or use custom-built components) 
    > We are currently using: Next UI (https://nextui.org/)
 
 2. Create the exercise list in app/practice/page.jsx
