@@ -50,8 +50,8 @@ export function Assignment({ id, answersResult, setResult, takeLife }) {
 
   return (
     <div>
-      <div class="relative min-w-[80%] mb-10 flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
-        <div class="p-12">
+      <div className="relative min-w-[80%] mb-10 flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
+        <div className="p-12">
           <KatexSpan text={questionText} className="mx-20 my-20 text-xl" />
         </div>
       </div>

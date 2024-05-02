@@ -3,8 +3,9 @@ import { nanoid } from "nanoid";
 import Heart from "./Heart" 
 
 export function Header({ excersises, answersResult, lifes, changeQuestion }) {
+  
     return (
-        <div class="flex gap-2 mb-20">
+        <div className="flex gap-2 mb-20">
             {excersises.map((id) => {
                 const color = answersResult[id] === undefined ? 'gray' :( answersResult[id] ? 'green': 'red')
                 return (
