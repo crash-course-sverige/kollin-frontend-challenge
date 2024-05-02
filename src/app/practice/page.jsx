@@ -46,6 +46,7 @@ export default function PracticePage() {
 
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center p-24 bg-[#202746]">
+    <h1 className="mb-8 text-4xl">Trigonometriska funktioner & identiteter</h1>
       <div className="p-20 justify-between items-center relative min-w-[80%] flex flex-col text-gray-700 bg-white shadow-md w-96 rounded-xl bg-clip-border">
         <Header
           excersises={excersises}
