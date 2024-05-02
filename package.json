@@ -14,11 +14,13 @@
     "@nextui-org/react": "^2.3.6",
     "framer-motion": "^11.1.7",
     "graphql": "^16.8.1",
+    "katex": "^0.16.10",
     "nanoid": "^5.0.7",
     "next": "14.2.3",
     "ra-data-graphql": "^4.16.15",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-katex": "^3.0.1"
   },
   "devDependencies": {
     "eslint": "^8",

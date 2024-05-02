@@ -1,11 +1,11 @@
 "use client";
-import excersises from "../../../exercises.json";
+import { useState } from "react";
 import GetAssignmentQuery from "../../graphql/GetAssignment.query";
 import { useQuery } from "@apollo/client";
 import { nanoid } from "nanoid";
 import { RadioGroup, Radio } from "@nextui-org/react";
 import { Button } from "@nextui-org/button";
-import { useState } from "react";
+import { KatexSpan } from "../katex/KatexSpan";
 
 export function Assignment({ id, answersResult, setResult, takeLife }) {
   const [selectedOption, setSelectedOption] = useState();
@@ -37,13 +37,13 @@ export function Assignment({ id, answersResult, setResult, takeLife }) {
 
   const checkHandler = () => {
     const correctAnswer = answerOptions.filter((o) => o.correct).pop().text;
-    const newResult = {...answersResult}
-    newResult[id] = correctAnswer === selectedOption
-    setIsCorrect(newResult[id])
+    const newResult = { ...answersResult };
+    newResult[id] = correctAnswer === selectedOption;
+    setIsCorrect(newResult[id]);
     if (!isCorrect) {
-        takeLife()
+      takeLife();
     }
-    setResult(newResult)
+    setResult(newResult);
   };
 
   const questionText = data.getAssignment.questionText;
@@ -52,12 +52,14 @@ export function Assignment({ id, answersResult, setResult, takeLife }) {
     <div>
       <div class="relative min-w-[80%] mb-10 flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
         <div class="p-12">
-          <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-            {questionText}
-          </p>
+          <KatexSpan text={questionText} className="mx-20 my-20 text-xl" />
         </div>
       </div>
-      { isCorrect !==undefined ? (isCorrect ? "Correct answer!" : "Incorrect answer!") : ""}
+      {isCorrect !== undefined
+        ? isCorrect
+          ? "Correct answer!"
+          : "Incorrect answer!"
+        : ""}
       <RadioGroup>
         <nav className="min-w-[80%] flex flex-col gap-2 p-2 font-sans text-base font-normal text-blue-gray-700">
           {options.map((option) => (
@@ -76,7 +78,7 @@ export function Assignment({ id, answersResult, setResult, takeLife }) {
                 className="min-w-[100%] "
                 onChange={() => setSelectedOption(option.text)}
               >
-                {option.text}
+                <KatexSpan text={option.text} />
               </Radio>
             </div>
           ))}
