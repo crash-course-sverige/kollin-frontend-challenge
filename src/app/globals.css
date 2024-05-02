@@ -48,3 +48,15 @@ body {
 .option-row:hover {
   background-color: #586fb5;
 }
+
+
+/* header */
+.bg-custom-gray {
+  background-color: gray;
+}
+.bg-custom-green {
+  background-color: green;
+}
+.bg-custom-red {
+  background-color: red;
+}
