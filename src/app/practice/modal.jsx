@@ -2,12 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 
-const Modal = ({ exercise, exercises, currentIndex, openModal, onNextExercise, onPrevExercise }) => {
+const Modal = ({ exercise, exercises, currentIndex, openModal, onNextExercise, onPrevExercise, hints }) => {
   const [answerStatus, setAnswerStatus] = useState({});
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
   const [message, setMessages] = useState({});
+  const [correctMessage, setCorrectMessage] = useState("");
+  const [solution, setSolution] = useState("");
   const [heart, setHeart] = useState(3);
-  console.log(heart)
+  const [showRightAnswer, setShowRightAnswer] = useState(false);
+  const [hintIndex, setHintIndex] = useState(0); 
+  const [hint, setShowHint] = useState("");
+  const [hintVisible, setHintVisible] = useState(false);
+
 
   const nextQuestion = () => {
 	onNextExercise();
@@ -21,6 +27,12 @@ const Modal = ({ exercise, exercises, currentIndex, openModal, onNextExercise, o
     if (exercise) {
       const shuffled = [...exercise.answerOptions].sort(() => 0.5 - Math.random());
       setShuffledAnswers(shuffled);
+	  setShowRightAnswer(false)
+	  setCorrectMessage("");
+	  setSolution("");
+	  setShowHint("");
+	  setHintVisible(false); 
+	  setHintIndex(0); 
     }
   }, [exercise]);
 
@@ -29,7 +41,6 @@ const Modal = ({ exercise, exercises, currentIndex, openModal, onNextExercise, o
       ...prev,
       [id]: { ...prev[id], answer: value, checked: false }
     }));
-	console.log("current answer before check:", answerStatus)
   };
 
  
@@ -44,10 +55,12 @@ const Modal = ({ exercise, exercises, currentIndex, openModal, onNextExercise, o
             const isCorrect = newStatus[ex.id].answer === correctOption.text;
 
             newStatus[ex.id] = { ...newStatus[ex.id], correct: isCorrect, checked: true };
-            newMessages[ex.id] = isCorrect ? `Bravo! Det rätta svaret var: "${correctOption.text}"` : "Tyvärr, det var fel svar!";
-
+            newMessages[ex.id] = isCorrect ? `Bravo! Det rätta svaret var: "${correctOption.text}"` : "Tyvärr, det var fel svar! Se lösningen nedan";
 			if (!isCorrect && exercises[currentIndex].id === ex.id) {
 				isIncorrect = true;
+				setShowRightAnswer(true);
+				setCorrectMessage(`Rätt svar var: ${correctOption.text}`)
+				setSolution(ex.solutionText)
 			}
         }
     });
@@ -60,19 +73,29 @@ const Modal = ({ exercise, exercises, currentIndex, openModal, onNextExercise, o
     setMessages(newMessages);
 };
 
+  
+const showHint = () => {
+    if (!hintVisible && hints && hints.length > 0) {
+      setShowHint(hints[0]); 
+      setHintVisible(true); 
+    }
+  };
+
+  const nextHint = () => {
+    setHintIndex(prevIndex => {
+      const nextIndex = (prevIndex + 1) % hints.length;
+      setShowHint(hints[nextIndex]); 
+      return nextIndex;
+    });
+  };
 
 
-  
-  const showHint = () => {
-	console.log("showing hint")
-  }
-  
 
   return (
     <div className="page">
       <div className="btn-holder">
         <Button onClick={openModal}>Stäng övning</Button>
-		<div >
+		<div>
 		<Button onClick={prevQuestion} style={{marginRight: "10px"}}>Föregående övning</Button>
         <Button onClick={nextQuestion}>Nästa övning</Button>
 		</div>
@@ -118,14 +141,33 @@ const Modal = ({ exercise, exercises, currentIndex, openModal, onNextExercise, o
             <label>{opt.text}</label>
           </div>
         ))}
-        <Button onClick={checkAnswer}>Check</Button>
+		 {!showRightAnswer ? (
+          <Button onClick={checkAnswer}>Check</Button>
+        ) : (
+          <div>{correctMessage}</div>
+        )}
+        
 		<Button onClick={showHint}>Få en hint</Button>
+		{hint && (
+        <>
+          <div className="hint">{hint}</div>
+          <Button onClick={nextHint}>Nästa hint</Button>
+        </>
+      )}
         {message[exercise.id] && (
           <div className="message">
             {message[exercise.id]}
           </div>
         )}
       </section>
+	{solution != "" &&
+	<div className='solution'>
+		<h4>Lösningen var: </h4>
+		{solution}
+		</div>
+	}
+	
+	
     </div>
   );
 };

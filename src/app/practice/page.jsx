@@ -9,6 +9,7 @@ import Modal from "./modal";
 
 const Page = () => {
   const [exercises, setExercises] = useState([]);
+  const [hints, setHints] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [currentExIndex, setCurrentExIndex] = useState(0);
@@ -67,11 +68,13 @@ const Page = () => {
       const results = await Promise.all(promises);
       const validExcercises = results.filter((result) => result !== null);
       setExercises(validExcercises);
-      console.log(validExcercises);
+	  const extractedHints = validExcercises.flatMap((exercise) => exercise.hints);
+      setHints(extractedHints);
     } catch (error) {
       console.error("Error fetching assignments:", error);
     }
   };
+
 
   const selectNextExercise = () => {
 	const nextIndex = currentExIndex + 1;
@@ -104,12 +107,12 @@ const Page = () => {
           {exercises &&
             exercises.map((ex, index) => {
               return (
-                <>
-                  <Accordion.Item key={index} eventKey={index}>
+                <div key={index}>
+                  <Accordion.Item  eventKey={index}>
                     <Accordion.Header>
                       Övning #{index + 1}
-					  <Button
-					  style={{marginLeft: "10px"}}
+					  <span
+					  className="chooseBtn"
                         onClick={() => {
                           setModalOpen(true);
                           setSelectedExercise(ex);
@@ -117,13 +120,13 @@ const Page = () => {
                         }}
                       >
                         Välj
-                      </Button>
+                      </span>
 					  <span style={{marginLeft: "30px"}}>Svårighetsgrad: {ex.difficultyScore}</span>
 					  
                     </Accordion.Header>
                     <Accordion.Body>{ex.questionText}</Accordion.Body>
                   </Accordion.Item>
-                </>
+                </div>
               );
             })}
         </Accordion>
@@ -136,6 +139,7 @@ const Page = () => {
 		  exercises={exercises}
             exercise={selectedExercise}
 			currentIndex={currentExIndex}
+			hints={hints}
             openModal={() => {
               setModalOpen(!modalOpen);
               setSelectedExercise(null);
