@@ -53,6 +53,7 @@ export default function PracticePage() {
           answersResult={answersResult}
           lifes={lifes}
           changeQuestion={changeQuestion}
+          currentQuestionId={excersises[currentQuestion]}
         />
 
         {currentQuestion < excersises.length && (

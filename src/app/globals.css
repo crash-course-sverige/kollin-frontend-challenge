@@ -52,7 +52,7 @@ body {
 
 /* header */
 .bg-custom-gray {
-  background-color: gray;
+  background-color: rgb(219, 210, 210);
 }
 .bg-custom-green {
   background-color: green;

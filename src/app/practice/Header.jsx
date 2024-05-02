@@ -2,7 +2,7 @@
 import { nanoid } from "nanoid";
 import Heart from "./Heart" 
 
-export function Header({ excersises, answersResult, lifes, changeQuestion }) {
+export function Header({ excersises, answersResult, lifes, changeQuestion, currentQuestionId }) {
   
     return (
         <div className="flex gap-2 mb-20">
@@ -15,10 +15,14 @@ export function Header({ excersises, answersResult, lifes, changeQuestion }) {
                 } else {
                     bgClass = 'bg-custom-red';
                 }
+
+                const isActive = currentQuestionId === id;
+                const borderClass = isActive ? 'border-2 border-[#202746]' : ''; 
+
                 return (
                     <div
                         key={nanoid()}
-                        className={`relative grid select-none items-center rounded-lg  px-12 py-2 cursor-pointer ${bgClass}`}
+                        className={`relative grid select-none items-center rounded-lg  px-12 py-2 cursor-pointer ${bgClass}  ${borderClass} hover:bg-blue-300`}
                         onClick={() => changeQuestion(id)}
                     ></div>
                 );
