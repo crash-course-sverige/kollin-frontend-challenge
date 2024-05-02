@@ -54,7 +54,7 @@ h1 {
 	align-items: center;
 	background-color: white;
 	width: 80vw;
-	height: 80vh;
+	height: auto;
 	margin: 0 auto;
 	border-radius: 64px;
 	padding: 50px;

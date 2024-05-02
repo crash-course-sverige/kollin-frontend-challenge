@@ -79,10 +79,22 @@ const Page = () => {
 	  setSelectedExercise(exercises[nextIndex]);
 	  setCurrentExIndex(nextIndex);
 	} else {
-	  setMessage("Du är klar med alla frågor!")
+	  setMessage("Inga fler frågor!")
 	  setModalOpen(!modalOpen);
 	}
   };
+
+  const selectPrevExercise = () => {
+    const prevIndex = currentExIndex - 1;
+    if (prevIndex >= 0) {
+        setSelectedExercise(exercises[prevIndex]);
+        setCurrentExIndex(prevIndex);
+    } else {
+        setMessage("Inga fler tidigare frågor!");  
+        setModalOpen(false); 
+    }
+};
+
 
   return (
     <div className="page">
@@ -96,7 +108,8 @@ const Page = () => {
                   <Accordion.Item key={index} eventKey={index}>
                     <Accordion.Header>
                       Övning #{index + 1}
-                      <Button
+					  <Button
+					  style={{marginLeft: "10px"}}
                         onClick={() => {
                           setModalOpen(true);
                           setSelectedExercise(ex);
@@ -105,6 +118,8 @@ const Page = () => {
                       >
                         Välj
                       </Button>
+					  <span style={{marginLeft: "30px"}}>Svårighetsgrad: {ex.difficultyScore}</span>
+					  
                     </Accordion.Header>
                     <Accordion.Body>{ex.questionText}</Accordion.Body>
                   </Accordion.Item>
@@ -126,6 +141,7 @@ const Page = () => {
               setSelectedExercise(null);
             }}
 			onNextExercise={selectNextExercise}
+			onPrevExercise={selectPrevExercise}
           />
         </div>
       )}
