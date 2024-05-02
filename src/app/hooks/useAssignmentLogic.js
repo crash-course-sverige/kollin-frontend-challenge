@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { nanoid } from "nanoid";
 import GetAssignmentQuery from "../../graphql/GetAssignment.query";
@@ -6,6 +6,10 @@ import GetAssignmentQuery from "../../graphql/GetAssignment.query";
 export function useAssignmentLogic(id, answersResult, setResult, takeLife) {
   const [selectedOption, setSelectedOption] = useState();
   const [isCorrect, setIsCorrect] = useState();
+
+  useEffect(()=> {
+    answersResult && setIsCorrect(answersResult[id])
+  }, [answersResult, id])
 
   const { data, loading, error } = useQuery(GetAssignmentQuery, {
     context: {
