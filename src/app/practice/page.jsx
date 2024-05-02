@@ -1,4 +1,5 @@
 import exercises from '../../../exercises.json';
+import Gameboard from './Gameboard';
 
 const getAssignment = async (id) => {
   try {
@@ -59,9 +60,17 @@ const getAllAssignments = async () => {
   return fetchedAssignments;
 };
 
-const Page = () => {
-  const assignment = getAllAssignments();
-  return <div></div>;
+const Page = async () => {
+  const assignments = await getAllAssignments();
+
+  return (
+    <div className='flex flex-col items-center justify-end h-screen text-slate-900'>
+      <h1 className='text-5xl mb-8 text-light'>
+        Trigonometriska funktioner & identiteter
+      </h1>
+      <Gameboard assignments={assignments} />
+    </div>
+  );
 };
 
 export default Page;
