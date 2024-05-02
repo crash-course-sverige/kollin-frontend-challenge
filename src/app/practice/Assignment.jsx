@@ -47,9 +47,11 @@ export function Assignment({ id, answersResult, setResult, takeLife }) {
   };
 
   const questionText = data.getAssignment.questionText;
+  const difficultyScore = data.getAssignment.difficultyScore;
 
   return (
     <div>
+      <h1>Difficulty Score: {difficultyScore}</h1>
       <div className="relative min-w-[80%] mb-10 flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
         <div className="p-12">
           <KatexSpan text={questionText} className="mx-20 my-20 text-xl" />
