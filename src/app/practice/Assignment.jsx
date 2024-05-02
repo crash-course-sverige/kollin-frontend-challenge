@@ -1,7 +1,6 @@
 "use client";
 import { nanoid } from "nanoid";
-import { RadioGroup, Radio } from "@nextui-org/react";
-import { Button } from "@nextui-org/button";
+import { RadioGroup, Button, Radio, Chip, Card, CardBody } from "@nextui-org/react";
 import { KatexSpan } from "../katex/KatexSpan";
 import { useAssignmentLogic } from "../hooks/useAssignmentLogic";
 
@@ -28,19 +27,29 @@ export function Assignment({ id, answersResult, setResult, takeLife }) {
     return <div>No data for this question</div>;
   }
 
+  const resultText = isCorrect ? (
+    <Chip color="success">Correct answer!</Chip>
+  ) : (
+    <Chip color="danger">Incorrect answer!</Chip>
+  );
+
   return (
     <div>
+      {isCorrect !== undefined && (
+        <Card className="mb-20">
+          <CardBody>
+            <p>Select next question</p>
+          </CardBody>
+        </Card>
+      )}
+
       <h1>Difficulty Score: {difficultyScore}</h1>
       <div className="relative min-w-[80%] mb-10 flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
         <div className="p-12">
           <KatexSpan text={questionText} className="mx-20 my-20 text-xl" />
         </div>
       </div>
-      {isCorrect !== undefined
-        ? isCorrect
-          ? "Correct answer!"
-          : "Incorrect answer!"
-        : ""}
+      {isCorrect !== undefined ? resultText : ""}
       <RadioGroup>
         <nav className="min-w-[80%] flex flex-col gap-2 p-2 font-sans text-base font-normal text-blue-gray-700">
           {options.map((option) => (

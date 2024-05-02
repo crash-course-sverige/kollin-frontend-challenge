@@ -10,7 +10,7 @@ export function Header({
   currentQuestionId,
 }) {
   return (
-    <div className="flex flex-wrap gap-2 mb-20 justify-center md:justify-start">
+    <div className="flex flex-wrap gap-2 mb-5 justify-center md:justify-start">
       {excersises.map((id) => {
         let bgClass;
         if (answersResult[id] === undefined) {
