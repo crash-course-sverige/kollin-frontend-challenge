@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@nextui-org/button";
+
 
 export default function Home() {
   return (
@@ -13,9 +15,9 @@ export default function Home() {
         priority="1"
       />
       <Link href="/practice">
-        <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <Button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Go to Practice
-        </button>
+        </Button>
       </Link>
     </div>
   );
