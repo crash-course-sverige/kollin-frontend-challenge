@@ -19,7 +19,7 @@ export function usePracticeLogic() {
   const takeLife = () => setLifes(lifes - 1);
 
   const correctAnswers = Object.values(answersResult).filter(
-    (value) => value === true
+    (value) => value === true,
   ).length;
 
   const handleClickTryAgain = () => {
