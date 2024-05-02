@@ -3,6 +3,7 @@ import excersises from "../../../exercises.json";
 import { Assignment } from "./Assignment";
 import { Header } from "./Header";
 import { useState } from "react";
+import { Button } from "@nextui-org/button";
 
 export default function PracticePage() {
   const initialResults = excersises.reduce((acc, id) => {
@@ -23,6 +24,12 @@ export default function PracticePage() {
     (value) => value === true,
   ).length;
 
+  const handleClickTryAgaine = () => {
+    setAnswersResult(initialResults);
+    setCurrentQuestion(0);
+    setLifes(3);
+  };
+
   if (lifes === 0) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center p-24 bg-[#202746]">
@@ -31,6 +38,7 @@ export default function PracticePage() {
           <p>
             Correct Answers: {correctAnswers} from {excersises.length} questions
           </p>
+          <Button onClick={handleClickTryAgaine}>Try againe!</Button>
         </div>
       </div>
     );
