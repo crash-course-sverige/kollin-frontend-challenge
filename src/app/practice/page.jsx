@@ -12,7 +12,6 @@ export default function PracticePage() {
   const [answersResult, setAnswersResult] = useState(initialResults);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [lifes, setLifes] = useState(3);
-  
 
   const changeQuestion = (id) => {
     setCurrentQuestion(excersises.findIndex((item) => item === id));
@@ -20,11 +19,19 @@ export default function PracticePage() {
 
   const takeLife = () => setLifes(lifes - 1);
 
+  const correctAnswers = Object.values(answersResult).filter(
+    (value) => value === true,
+  ).length;
+
   if (lifes === 0) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center p-24 bg-[#202746]">
-        GAME OVER!!! STATISTICS:
-        {JSON.stringify(answersResult)}
+        <div className="mt-4">
+          <p>Game over!</p>
+          <p>
+            Correct Answers: {correctAnswers} from {excersises.length} questions
+          </p>
+        </div>
       </div>
     );
   }
