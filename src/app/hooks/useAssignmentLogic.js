@@ -40,10 +40,10 @@ export function useAssignmentLogic(id, answersResult, setResult, takeLife) {
     const correctAnswer = answerOptions.filter((o) => o.correct).pop().text;
     const newResult = { ...answersResult };
     newResult[id] = correctAnswer === selectedOption;
-    setIsCorrect(newResult[id]);
-    if (!isCorrect) {
+    if (newResult[id] === false) {
       takeLife();
     }
+    setIsCorrect(newResult[id]);
     setResult(newResult);
   };
 
