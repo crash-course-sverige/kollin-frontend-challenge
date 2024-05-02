@@ -4,7 +4,6 @@ import axios from "axios";
 import assignmentIds from "../../../exercises.json";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Accordion from "react-bootstrap/Accordion";
-import Button from "react-bootstrap/Button";
 import Modal from "./modal";
 
 const Page = () => {
@@ -121,7 +120,7 @@ const Page = () => {
                       >
                         Välj
                       </span>
-					  <span style={{marginLeft: "30px"}}>Svårighetsgrad: {ex.difficultyScore}</span>
+					  <span style={{fontSize: "12px", marginLeft: "3%"}}>Svårighetsgrad: {ex.difficultyScore}</span>
 					  
                     </Accordion.Header>
                     <Accordion.Body>{ex.questionText}</Accordion.Body>

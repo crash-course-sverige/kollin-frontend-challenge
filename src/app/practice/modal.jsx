@@ -82,11 +82,14 @@ const showHint = () => {
   };
 
   const nextHint = () => {
-    setHintIndex(prevIndex => {
-      const nextIndex = (prevIndex + 1) % hints.length;
-      setShowHint(hints[nextIndex]); 
-      return nextIndex;
-    });
+	setHintIndex(prevIndex => {
+	  let nextIndex = prevIndex + 1;
+	  if (nextIndex >= hints.length) {  
+		nextIndex = 0;                 
+	  }
+	  setShowHint(hints[nextIndex]);   
+	  return nextIndex;           
+	});
   };
 
 
