@@ -51,7 +51,7 @@ async function fetchAPI(ids) {
   });
 
   let assignements = await Promise.all(fetchPromises);
-  return assignements;
+  return assignements.filter((assignment) => assignment !== null);
 }
 
 export default fetchAPI;

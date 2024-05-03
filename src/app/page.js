@@ -11,6 +11,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [assignments, setAssignments] = useState([]);
   const [index, setIndex] = useState(0);
+  const [answers, setAnswers] = useState([]);
+  //add lives
 
   useEffect(() => {
     const fetchAssignmentsData = async () => {
@@ -52,7 +54,14 @@ export default function Home() {
   function Content() {
     if (!!assignments && assignments.length > 0 && !!assignments[index])
       return (
-        <Card assignment={assignments[index]} key={assignments[index].id} />
+        <Card
+          assignment={assignments[index]}
+          assignments={assignments}
+          key={assignments[index].id}
+          index={index}
+          answers={answers}
+          setAnswers={setAnswers}
+        />
       );
   }
 }
