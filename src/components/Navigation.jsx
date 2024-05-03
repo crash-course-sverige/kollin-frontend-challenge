@@ -12,36 +12,28 @@ export default function Navigation({
     handleExerciseChange(indexOfClickedExercise);
   };
 
-  // return (
-  //   <div>
-  //     <ul className="flex">
-  //       {exercises.map((exercise) => (
-  //         <li
-  //           onClick={() => handleClick(exercise)}
-  //           className={`${
-  //             exercise.id === currentExercise.id ? "border border-blue-500" : ""
-  //           } m-4 w-12 h-4  ${
-  //             exercise.selectedAnswer ===
-  //             exercise.answerOptions.find((option) => option.correct === true)
-  //               ? "bg-green-500"
-  //               : "bg-red-300"
-  //           }`}
-  //           key={exercise.id}
-  //         ></li>
-  //       ))}
-  //     </ul>
-  //   </div>
-  // );
-
   return (
     <div>
-      <ul className="flex">
+      <ul className="flex ">
         {exercises.map((exercise) => (
           <li
             onClick={() => handleClick(exercise)}
-            className={`${
+            className={`
+            ${
               exercise.id === currentExercise.id ? "border border-blue-500" : ""
-            }  m-4 w-12 h-4 bg-red-300`}
+            }  
+            ${
+              exercise.selectedAnswer === undefined
+                ? "bg-gray-300"
+                : exercise.selectedAnswer ===
+                  exercise.answerOptions.find(
+                    (option) => option.correct === true
+                  ).text
+                ? "bg-green-300"
+                : "bg-red-300"
+            } 
+            
+             m-2 h-4 w-[146px] rounded-full cursor-pointer`}
             key={exercise.id}
           ></li>
         ))}

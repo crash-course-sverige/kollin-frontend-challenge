@@ -3,6 +3,7 @@
 import Navigation from "./Navigation";
 import Hearts from "./Hearts";
 import CurrentExercise from "./CurrentExercise";
+import GameOver from "./GameOver";
 
 import { useState } from "react";
 
@@ -11,7 +12,7 @@ export default function Exercise({ exerciseData }) {
   const [currentExercise, setCurrentExercise] = useState(exercises[0]);
   const [hearts, setHearts] = useState(3);
 
-  function handleExerciseChange(indexOfClickedExercise) {
+  function handleSetCurrentExercise(indexOfClickedExercise) {
     if (currentExercise.id !== exercises[indexOfClickedExercise].id) {
       setCurrentExercise((prevExercise) => {
         return (prevExercise = exercises[indexOfClickedExercise]);
@@ -40,19 +41,37 @@ export default function Exercise({ exerciseData }) {
     });
   }
 
+  function restart() {
+    setExercises((prevExercises) => {
+      return (prevExercises = exerciseData);
+    });
+    setCurrentExercise((prevExercise) => {
+      return (prevExercise = exerciseData[0]);
+    });
+    setHearts((prevHearts) => {
+      return (prevHearts = 3);
+    });
+  }
+
   console.log(exercises);
 
   const actualCurrentExercise = exercises.find(
     (exercise) => exercise.id === currentExercise.id
   );
 
+  const allExercisesAnswered = exercises.every(
+    (exercise) => exercise.selectedAnswer !== undefined
+  );
+
+  const showGameOver = hearts === 0 || allExercisesAnswered;
+
   return (
-    <section className="flex flex-col gap-8 mx-32 mt-32 bg-white items-center p-8">
-      <header className="flex">
+    <section className="flex flex-col gap-8 mx-auto w-4/5 mt-32 bg-white max-w-[1052px] items-center p-8">
+      <header className="flex w-full">
         <Navigation
           exercises={exercises}
           currentExercise={currentExercise}
-          handleExerciseChange={handleExerciseChange}
+          handleExerciseChange={handleSetCurrentExercise}
         />
         <Hearts hearts={hearts} />
       </header>
@@ -63,10 +82,8 @@ export default function Exercise({ exerciseData }) {
           handleSetHearts={handleSetHearts}
         />
       </main>
-      {hearts === 0 && (
-        <div className="absolute top-0 left-0 z-10 bg-gray-700 bg-opacity-50 w-screen h-screen">
-          <h1 className="text-4xl text-red-400 ">Game Over</h1>
-        </div>
+      {showGameOver && (
+        <GameOver hearts={hearts} exercises={exercises} restart={restart} />
       )}
     </section>
   );

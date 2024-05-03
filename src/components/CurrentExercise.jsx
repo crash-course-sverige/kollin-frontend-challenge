@@ -13,7 +13,7 @@ export default function CurrentExercise({
     } else {
       setSelectedOption(null);
     }
-  }, [currentExercise.selectedAnswer]);
+  }, [currentExercise.selectedAnswer, currentExercise]);
 
   const correctAnswer = currentExercise.answerOptions.find(
     (option) => option.correct === true
@@ -32,28 +32,43 @@ export default function CurrentExercise({
   };
 
   return (
-    <section>
+    <section className="flex flex-col gap-8">
       <p className="text-black">{currentExercise.questionText}</p>
 
-      <fieldset>
+      <fieldset className="flex flex-col items-center justify-end gap-2">
         {currentExercise.answerOptions.map((option) => (
           <div
-            className={`${
+            className={`
+            border-2 border-[#E7E5E4]  rounded-lg p-4 w-full flex justify-center gap-2
+            ${
+              (
+                currentExercise.selectedAnswer
+                  ? currentExercise.selectedAnswer === option.text
+                  : selectedOption === option.text
+              )
+                ? "bg-[#E2E8F9]  border-[#A8B9EE]"
+                : ""
+            }
+            ${
               currentExercise.selectedAnswer &&
               option.text === correctAnswer.text &&
               selectedOption
                 ? "bg-green-300"
                 : ""
             } ${
-              currentExercise.selectedAnswer && option.text === selectedOption
+              currentExercise.selectedAnswer &&
+              option.text === selectedOption &&
+              option.text !== correctAnswer.text
                 ? "bg-red-300"
                 : ""
-            }`}
+            }
+            `}
             key={option.text}
           >
             <input
               type="radio"
               id={option.text}
+              className=""
               name="options"
               value={option.text}
               checked={
@@ -70,10 +85,12 @@ export default function CurrentExercise({
       </fieldset>
 
       <button
-        disabled={currentExercise.selectedAnswer}
+        disabled={currentExercise.selectedAnswer || !selectedOption}
         onClick={handleCheck}
         className={`${
-          currentExercise.selectedAnswer ? "bg-gray-300" : "bg-blue-300"
+          currentExercise.selectedAnswer || !selectedOption
+            ? "bg-gray-300"
+            : "bg-blue-300"
         }`}
       >
         Check
