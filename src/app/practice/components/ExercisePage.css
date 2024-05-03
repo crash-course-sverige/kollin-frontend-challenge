@@ -1,0 +1,96 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	min-width: 100%;
+	min-height: 100vh;
+	background-color: #5c70b7;
+	align-items: center;
+	justify-content: center;
+}
+
+.wrapper {
+	max-width: 80svw;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	background-color: white;
+	color: black;
+	padding-inline: 6rem;
+	padding-block: 2.5rem;
+	border-radius: 1.8rem;
+}
+
+.wrapper-progressBar {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 5px;
+}
+
+.progressBar {
+	cursor: pointer;
+	height: 11px;
+	border-radius: 5px;
+	width: 20%;
+	background-color: #d7d3d0;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.form-label {
+	cursor: pointer;
+	border: 1px solid rgb(205, 205, 205);
+	border-radius: 4px;
+	width: 100%;
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	justify-content: center;
+	padding-block: 0.4rem;
+}
+
+.btn {
+	background-color: #5c70b7;
+	color: white;
+	border-radius: 4px;
+	width: 100%;
+	padding-block: 0.4rem;
+	margin-top: 1.6rem;
+}
+
+.selected {
+	background-color: #e3e8fa;
+	border: 1px solid #abb9f0;
+	cursor: pointer;
+	border-radius: 4px;
+	width: 100%;
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	justify-content: center;
+	padding-block: 0.4rem;
+}
+
+.active {
+	border: 2px solid #4281f0;
+}
+
+.correct {
+	background-color: #72c600;
+}
+
+.incorrect {
+	background-color: #ef9004;
+}
+
+@media (max-width: 580px) {
+	.wrapper {
+		max-width: 90svw;
+		padding-inline: 2rem;
+	}
+}

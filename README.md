@@ -1,8 +1,6 @@
+Code test for Kollin by Ivona Josipovic // https://github.com/iwarra
 
 # A mini Kollin project
-
-
-
 
 - [A mini Kollin project](#a-mini-kollin-project)
   - [The task](#the-task)
@@ -15,14 +13,12 @@
   - [Assessment criteria](#assessment-criteria)
   - [Submission](#submission)
 
-
-
-
 Kollin is a startup that provides accessible and interactive study material to university students. Our mission is to make studying at the university more fun and engaging for everyone!
 
 ## The task
 
 ### Objective
+
 The objective is to create a view that displays a list of Exercises, the user can click on an exercise in the list to view it. Each exercise is a Multiple-choice-question, the user can select an option and press a button to check if their answer is correct. Kind of like Duolingo if you have used it!
 
 ### Mockup
@@ -33,27 +29,28 @@ Please see the full interactive figma mockup here:
 https://www.figma.com/file/9rDWfun0I1TdEfQt5vM4kD/Untitled?type=design&node-id=1%3A6669&mode=design&t=sqgMG34VPQ82y9zs-1
 
 ### Instructions
+
 Please see referred resources in the [Resources](#resources) section below
 
 1. Fork this repository
-[Optional] install a component library of your choice (or use custom-built components)
-    
+   [Optional] install a component library of your choice (or use custom-built components)
+
    > We are currently using: Next UI (https://nextui.org/)
 
 2. Create the exercise list in app/practice/page.jsx
 
-3. Get the exercises from the API 
+3. Get the exercises from the API
    - See: [R1](#r1-graphql-api) for GraphQL API access
-   - See: [R2](#r2-exercises) section for data structure specification [] 
-4. Render the list of exercises 
-5. Automatically redirect to the first exercise in the list. 
+   - See: [R2](#r2-exercises) section for data structure specification []
+4. Render the list of exercises
+5. Automatically redirect to the first exercise in the list.
    - The list of exercises should remain intact.
    - When the user clicks on an exercise: redirect to that exercise
-6. Show the selected Exercise and all metadata 
+6. Show the selected Exercise and all metadata
 7. Show the interactive options
-8. Provide feedback to the user if they answered correctly or incorrectly when they submit 
-9. Reflect their progress in the list of exercises 
-10. The user has 3 hearts, if they answer incorrectly they lose a heart. 
+8. Provide feedback to the user if they answered correctly or incorrectly when they submit
+9. Reflect their progress in the list of exercises
+10. The user has 3 hearts, if they answer incorrectly they lose a heart.
     > If they lose all hearts, show a message that they have lost and show an overview of their progress
 
 ---
@@ -78,25 +75,25 @@ You'll need to authenticate with the following header:
 
 The relevant queries are given below
 
- Note that in the API, an 'exercise' is called `Assignment`
+Note that in the API, an 'exercise' is called `Assignment`
 
 ```graphql
-  query GetAssignment($id: ID!) {
-    getAssignment(id: $id) {
-      id
-      difficultyScore
-      questionText
-      solutionText
-      hints
-      answerOptions {
-        id
-        text
-        correct
-      }
-      createdAt
-      updatedAt
-    }
-  }
+query GetAssignment($id: ID!) {
+	getAssignment(id: $id) {
+		id
+		difficultyScore
+		questionText
+		solutionText
+		hints
+		answerOptions {
+			id
+			text
+			correct
+		}
+		createdAt
+		updatedAt
+	}
+}
 ```
 
 ### R2. Exercises
@@ -117,8 +114,6 @@ Here is an explanation of the fields in the Assignment object:
 | `answerOptions.text`    | String         | The text of the answer option            |
 | `answerOptions.correct` | Boolean        | If the answer option is correct          |
 
-
-
 ---
 
 ## Assessment criteria
@@ -128,13 +123,10 @@ The code should be
 - clean: no commented code, no linting errors and prettier formatting
 - maintainable: easy to understand and extend
 - efficient: no unnecessary re-renders or API calls that could be avoided
-- reusable: components should be reusable and modular to avoid repetition. 
+- reusable: components should be reusable and modular to avoid repetition.
 
 ## Submission
 
 Please submit your solution by creating a pull request to this repository. You can also add a README.md file to explain your solution and any additional notes you would like to add. Good luck!
 
-
---- 
-
-
+---
