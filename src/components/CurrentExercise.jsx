@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Latex from "react-latex";
 
 export default function CurrentExercise({
   currentExercise,
@@ -33,13 +34,15 @@ export default function CurrentExercise({
 
   return (
     <section className="flex flex-col gap-8">
-      <p className="text-black font-crimson">{currentExercise.questionText}</p>
+      <Latex className="text-black font-crimson">
+        {currentExercise.questionText}
+      </Latex>
 
       <fieldset className="flex flex-col items-center justify-end gap-2 font-crimson">
         {currentExercise.answerOptions.map((option) => (
           <div
             className={`
-            border-2 border-[#E7E5E4]  rounded-lg p-4 w-full flex justify-center gap-2
+            border-2  rounded-lg p-4 w-full flex justify-center gap-2
             ${
               !currentExercise.selectedAnswer && option.text === selectedOption
                 ? "bg-LIGHT_BLUE  border-BLUE"
@@ -74,7 +77,9 @@ export default function CurrentExercise({
               onChange={handleOptionChange}
               disabled={currentExercise.selectedAnswer}
             />
-            <label htmlFor={option.text}>{option.text}</label>
+            <label htmlFor={option.text}>
+              <Latex>{option.text}</Latex>
+            </label>
           </div>
         ))}
       </fieldset>
@@ -82,7 +87,7 @@ export default function CurrentExercise({
       <button
         disabled={currentExercise.selectedAnswer || !selectedOption}
         onClick={handleCheck}
-        className={`py-3 rounded-lg ${
+        className={`py-3 rounded-lg text-white ${
           currentExercise.selectedAnswer || !selectedOption
             ? "bg-[#7d89ae] cursor-not-allowed"
             : "bg-DARK_BLUE hover:bg-[#4660af]"
