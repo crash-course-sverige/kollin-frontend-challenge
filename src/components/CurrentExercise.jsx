@@ -33,6 +33,32 @@ export default function CurrentExercise({
     }
   };
 
+  const getOptionClasses = (option) => {
+    let classes = "border-2 rounded-lg p-4 w-full flex justify-center gap-2";
+
+    if (!currentExercise.selectedAnswer && option.text === selectedOption) {
+      classes += " bg-LIGHT_BLUE border-BLUE";
+    }
+
+    if (
+      currentExercise.selectedAnswer &&
+      option.text === correctAnswer.text &&
+      selectedOption
+    ) {
+      classes += " bg-GREEN border-GREEN";
+    }
+
+    if (
+      currentExercise.selectedAnswer &&
+      option.text === selectedOption &&
+      option.text !== correctAnswer.text
+    ) {
+      classes += " bg-ORANGE border-ORANGE";
+    }
+
+    return classes;
+  };
+
   return (
     <section className="flex flex-col gap-8">
       <Latex className="text-black font-crimson">
@@ -41,30 +67,7 @@ export default function CurrentExercise({
 
       <fieldset className="flex flex-col items-center justify-end gap-2 font-crimson">
         {currentExercise.answerOptions.map((option) => (
-          <div
-            className={`
-            border-2  rounded-lg p-4 w-full flex justify-center gap-2
-            ${
-              !currentExercise.selectedAnswer && option.text === selectedOption
-                ? "bg-LIGHT_BLUE  border-BLUE"
-                : ""
-            }
-            ${
-              currentExercise.selectedAnswer &&
-              option.text === correctAnswer.text &&
-              selectedOption
-                ? "bg-GREEN border-GREEN"
-                : ""
-            } ${
-              currentExercise.selectedAnswer &&
-              option.text === selectedOption &&
-              option.text !== correctAnswer.text
-                ? "bg-ORANGE border-ORANGE"
-                : ""
-            }
-            `}
-            key={option.text}
-          >
+          <div className={getOptionClasses(option)} key={option.text}>
             <input
               type="radio"
               id={option.text}
