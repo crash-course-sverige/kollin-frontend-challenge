@@ -13,14 +13,16 @@ export default function Navigation({
   };
 
   return (
-    <div>
-      <ul className="flex ">
+    <div className="w-full">
+      <ul className="flex gap-2">
         {exercises.map((exercise) => (
           <li
             onClick={() => handleClick(exercise)}
             className={`
             ${
-              exercise.id === currentExercise.id ? "border border-blue-500" : ""
+              exercise.id === currentExercise.id
+                ? "border-2 border-blue-500"
+                : ""
             }  
             ${
               exercise.selectedAnswer === undefined
@@ -29,11 +31,11 @@ export default function Navigation({
                   exercise.answerOptions.find(
                     (option) => option.correct === true
                   ).text
-                ? "bg-green-300"
-                : "bg-red-300"
+                ? "bg-[#66C61C]"
+                : "bg-[#F79009]"
             } 
             
-             m-2 h-4 w-[146px] rounded-full cursor-pointer`}
+            h-4 flex-grow rounded-full cursor-pointer`}
             key={exercise.id}
           ></li>
         ))}

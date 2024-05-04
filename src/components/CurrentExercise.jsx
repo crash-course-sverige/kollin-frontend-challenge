@@ -46,20 +46,20 @@ export default function CurrentExercise({
                   ? currentExercise.selectedAnswer === option.text
                   : selectedOption === option.text
               )
-                ? "bg-[#E2E8F9]  border-[#A8B9EE]"
+                ? "bg-[#E2E8F9]  border-[#96aae7]"
                 : ""
             }
             ${
               currentExercise.selectedAnswer &&
               option.text === correctAnswer.text &&
               selectedOption
-                ? "bg-green-300"
+                ? "bg-[#66C61C] border-[#66C61C]"
                 : ""
             } ${
               currentExercise.selectedAnswer &&
               option.text === selectedOption &&
               option.text !== correctAnswer.text
-                ? "bg-red-300"
+                ? "bg-[#F79009] border-[#F79009]"
                 : ""
             }
             `}
@@ -68,7 +68,6 @@ export default function CurrentExercise({
             <input
               type="radio"
               id={option.text}
-              className=""
               name="options"
               value={option.text}
               checked={
@@ -87,10 +86,10 @@ export default function CurrentExercise({
       <button
         disabled={currentExercise.selectedAnswer || !selectedOption}
         onClick={handleCheck}
-        className={`${
+        className={`py-3 rounded-lg ${
           currentExercise.selectedAnswer || !selectedOption
-            ? "bg-gray-300"
-            : "bg-blue-300"
+            ? "bg-[#7d89ae] cursor-not-allowed"
+            : "bg-[#586FB5] hover:bg-[#4660af]"
         }`}
       >
         Check

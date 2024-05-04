@@ -62,7 +62,9 @@ export default async function ExerciseList() {
 
   return (
     <div>
-      <h1>Trigonometriska funktioner & identiteter</h1>
+      <h1 className="text-5xl text-[#FDFDFC] text-center pt-10">
+        Trigonometriska funktioner & identiteter
+      </h1>
 
       <ExerciseView exerciseData={exerciseData} />
     </div>

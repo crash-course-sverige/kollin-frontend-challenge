@@ -66,25 +66,27 @@ export default function Exercise({ exerciseData }) {
   const showGameOver = hearts === 0 || allExercisesAnswered;
 
   return (
-    <section className="flex flex-col gap-8 mx-auto w-4/5 mt-32 bg-white max-w-[1052px] items-center p-8">
-      <header className="flex w-full">
-        <Navigation
-          exercises={exercises}
-          currentExercise={currentExercise}
-          handleExerciseChange={handleSetCurrentExercise}
-        />
-        <Hearts hearts={hearts} />
-      </header>
-      <main>
-        <CurrentExercise
-          currentExercise={actualCurrentExercise}
-          handleSetAnswer={(answer) => handleSetAnswer(answer)}
-          handleSetHearts={handleSetHearts}
-        />
-      </main>
+    <>
+      <section className="absolute bottom-0 left-0 right-0 mx-auto h-4/5 flex flex-col gap-8  w-4/5  bg-white max-w-[1052px] items-center p-8 rounded-t-[64px]">
+        <header className="flex items-center w-3/5">
+          <Navigation
+            exercises={exercises}
+            currentExercise={currentExercise}
+            handleExerciseChange={handleSetCurrentExercise}
+          />
+          <Hearts hearts={hearts} />
+        </header>
+        <main className="w-3/5">
+          <CurrentExercise
+            currentExercise={actualCurrentExercise}
+            handleSetAnswer={(answer) => handleSetAnswer(answer)}
+            handleSetHearts={handleSetHearts}
+          />
+        </main>
+      </section>
       {showGameOver && (
         <GameOver hearts={hearts} exercises={exercises} restart={restart} />
       )}
-    </section>
+    </>
   );
 }
