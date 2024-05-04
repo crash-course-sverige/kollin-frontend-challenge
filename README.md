@@ -1,4 +1,4 @@
-# Marco's Explaination
+# Marco's Explanation
 
 Firstly, I had to do some research and read the docs of Next.js as I just started working with React recently and therefore never worked with Next.js before.
 Though it was a fun coding challenge for me and I learned a lot! 😊
@@ -15,11 +15,11 @@ I tried to use as little state as possible and derive as many values from it as 
 
 I did not stick 100% to the given Figma mockup in order to add some responsivness.
 
-For me it was not clear if I should build two different views. One where all meta data of the exercises gets rendered and a user can click on one exercise in order to get to the given Figma mockup or if only the Figma mockup view is required for this coding challenge. So I decided to only build the Figma mockup as I assumed there would be another view provided if it is required.
+For me it was not clear if I should build two different views. One where all meta data of the exercises gets rendered and a user can click on one exercise in order to get to the given view in the Figma mockup or if only the Figma mockup view is required for this coding challenge. So I decided to only build the Figma mockup as I assumed there would be another view provided if it is required. Therefore I also only worked with the meta data that is present in the mockup and did not add a functionality to show hints. But I displayed the difficulty score in the user feedback.
 
 ## Difficulties
 
-I was not sure how to make a clean cut between the server and client side components. Therefore I passed down the fetched data to the ExerciseView component where I handled all client side components.
+I was not sure how to make a clean cut between server and client side components. Therefore I passed down the fetched data to the ExerciseView component where I handled all client side components.
 
 ## Next steps
 
