@@ -1,14 +1,14 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { FaCheck, FaHeart, FaHeartBroken } from 'react-icons/fa';
+import { FaCheck, FaHeart } from 'react-icons/fa';
 import AnswerButton from './AnswerButton';
 import Hints from './Hints';
-import Modal from './Modal';
 import Button from './Button';
 import { IoCloseSharp } from 'react-icons/io5';
 import Badge from './Badge';
 import ResultModal from './ResultModal';
+import AssignmentModal from './AssignmentModal';
 
 const Gameboard = ({ fetchedAssignments }) => {
   const [assignments, setAssignments] = useState();
@@ -63,19 +63,6 @@ const Gameboard = ({ fetchedAssignments }) => {
     });
   };
 
-  const checkForAnswers = () => {
-    let allQuestionsAnswered = true;
-
-    for (const assignment of assignments) {
-      if (!assignment.userAnswerChecked) {
-        allQuestionsAnswered = false;
-        break;
-      }
-    }
-
-    return allQuestionsAnswered;
-  };
-
   const handleSelectAnswer = (index) => {
     setAssignments((old) => {
       const newAssignments = [...old];
@@ -106,6 +93,19 @@ const Gameboard = ({ fetchedAssignments }) => {
     });
 
     setShowAssignmentModal(true);
+  };
+
+  const checkForAnswers = () => {
+    let allQuestionsAnswered = true;
+
+    for (const assignment of assignments) {
+      if (!assignment.userAnswerChecked) {
+        allQuestionsAnswered = false;
+        break;
+      }
+    }
+
+    return allQuestionsAnswered;
   };
 
   const nextButton = () => {
@@ -158,31 +158,11 @@ const Gameboard = ({ fetchedAssignments }) => {
   return (
     <>
       {showAssignmentModal && (
-        <Modal>
-          <div className='flex justify-center items-center gap-1'>
-            {currentAssignment.answeredCorrectly ? (
-              <>
-                <FaCheck className='text-green-500' />
-                <h1 className='text-xl'>Ditt svar är korrekt!</h1>
-              </>
-            ) : (
-              <>
-                <IoCloseSharp className='text-red-500 text-2xl' />
-                <h1 className='text-xl'>Ditt svar är inkorrekt.</h1>
-              </>
-            )}
-          </div>
-          <div className='flex flex-col gap-2'>
-            <h2 className='font-bold'>Lösning:</h2>
-            <p>{currentAssignment.solutionText}</p>
-          </div>
-          {checkForAnswers() && (
-            <h2 className='text-xl text-center'>
-              Du har besvarat alla frågor!
-            </h2>
-          )}
-          {nextButton()}
-        </Modal>
+        <AssignmentModal
+          currentAssignment={currentAssignment}
+          checkForAnswers={checkForAnswers}
+          nextButton={nextButton()}
+        />
       )}
       {showResultModal && (
         <ResultModal
@@ -194,7 +174,7 @@ const Gameboard = ({ fetchedAssignments }) => {
       <div className='flex h-full gap-2 items-center'>
         <div className='flex h-2 w-full gap-2'>{generateProgressBar()}</div>
         <div className='flex gap-1 h-4 items-center text-rose-500 text-lg'>
-          {hearts === 0 ? <FaHeartBroken /> : <FaHeart />}
+          <FaHeart />
           {hearts}
         </div>
       </div>
