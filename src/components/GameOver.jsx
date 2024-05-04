@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Latex from "react-latex";
+import Button from "./Button";
 
 export default function GameOver({ hearts, exercises, restart }) {
   function handleRestart() {
@@ -36,12 +37,12 @@ export default function GameOver({ hearts, exercises, restart }) {
           <p className=" text-red-400 text-xl">You lost all your hearts!</p>
         )}
 
-        <button
-          className="w-1/5 p-2 text-white bg-orange-300 hover:bg-orange-400 rounded-lg"
+        <Button
+          additionalClasses={"w-1/5 p-2 text-white bg-orange-300  rounded-lg"}
           onClick={handleRestart}
         >
           Restart
-        </button>
+        </Button>
 
         <p className="text-white text-xl">
           Your score: {score}/{exercises.length}
@@ -64,7 +65,7 @@ export default function GameOver({ hearts, exercises, restart }) {
               </h2>
               <p>Difficulty: {exercise.difficultyScore}</p>
               <p>
-                Correct Answer:{" "}
+                Correct answer:{" "}
                 <Latex>
                   {
                     exercise.answerOptions.find(

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Latex from "react-latex";
+import Button from "./Button";
 
 export default function CurrentExercise({
   currentExercise,
@@ -84,17 +85,13 @@ export default function CurrentExercise({
         ))}
       </fieldset>
 
-      <button
-        disabled={currentExercise.selectedAnswer || !selectedOption}
+      <Button
         onClick={handleCheck}
-        className={`py-3 rounded-lg text-white ${
-          currentExercise.selectedAnswer || !selectedOption
-            ? "bg-[#7d89ae] cursor-not-allowed"
-            : "bg-DARK_BLUE hover:bg-[#4660af]"
-        }`}
+        disabled={currentExercise.selectedAnswer || !selectedOption}
+        additionalClasses={"bg-DARK_BLUE"}
       >
         Check
-      </button>
+      </Button>
     </section>
   );
 }
