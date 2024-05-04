@@ -1,5 +1,8 @@
 # Application Architecture
 
+![Main Interface](https://github.com/andreamicheli/kollin-frontend-challenge-amicheli/blob/main/public/imageMD.png)
+
+
 This application is built using Next.js, a React framework that enables server-side rendering and generating static websites for React-based web applications.
 For styling purposes, the library Tailwind was used, and for specific templates also the library react-dom-confetti and react-latex.
 
