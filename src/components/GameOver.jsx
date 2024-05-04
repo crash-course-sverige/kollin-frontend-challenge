@@ -17,7 +17,7 @@ export default function GameOver({ hearts, exercises, restart }) {
   );
 
   return (
-    <div className="absolute top-0 left-0 z-10 bg-black bg-opacity-80 w-screen h-screen">
+    <div className="absolute top-0 left-0 z-10 bg-black  w-screen h-screen">
       <div className="bg-[#586FB5] flex flex-col gap-4 items-center w-4/5 mx-auto p-8">
         <Image
           src="https://d1mgntrf3vaj6d.cloudfront.net/kollin_logo_white.svg"

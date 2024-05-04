@@ -53,8 +53,6 @@ export default function Exercise({ exerciseData }) {
     });
   }
 
-  console.log(exercises);
-
   const actualCurrentExercise = exercises.find(
     (exercise) => exercise.id === currentExercise.id
   );
