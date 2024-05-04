@@ -24,7 +24,7 @@ const ResultModal = ({ assignments, handleReset, gameOver = false }) => {
 
   return (
     <Modal>
-      <div className='flex flex-col gap-8 justify-center items-center'>
+      <div className='flex flex-col gap-8 justify-center items-center p-4'>
         {gameOver && (
           <div className='flex flex-col gap-8 justify-center items-center'>
             <FaSadCry className='text-8xl text-[#586FB5]/70' />
