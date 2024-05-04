@@ -42,7 +42,7 @@ export default function Home() {
         />
       ) : (
         <div className="flex justify-center items-center flex-col h-screen">
-          <p className="pt-8 pb-16 text-white text-4xl">
+          <p className="lg:pt-8 lg:pb-16 pb-2 text-white lg:text-4xl text-base">
             Trigonometriska funktioner & identiteter
           </p>
           {Content()}

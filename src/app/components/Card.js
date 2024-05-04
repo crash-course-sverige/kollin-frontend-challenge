@@ -20,7 +20,7 @@ const Card = ({
   const correctGuesses = answers.filter((answer) => answer.isCorrect).length;
 
   return (
-    <div className="card px-[232px] w-[1200px] py-8 mx-64 rounded-[60px] bg-white h-full text-black">
+    <div className="card lg:px-[232px] lg:mx-64 lg:w-[1200px] md:w-full px-8 lg:py-8 py-2 rounded-[60px] bg-white h-full text-black lg:text-base text-sm">
       <div key={assignment.id} className="flex flex-col gap-8">
         <div className="w-full flex flex-row gap-4">
           <Progress
