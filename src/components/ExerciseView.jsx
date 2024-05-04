@@ -67,7 +67,7 @@ export default function Exercise({ exerciseData }) {
 
   return (
     <>
-      <section className="absolute bottom-0 left-0 right-0 mx-auto h-4/5 flex flex-col gap-8  w-4/5  bg-white max-w-[1352px] items-center p-8 rounded-t-[64px]">
+      <div className="absolute bottom-0 left-0 right-0 mx-auto h-4/5 flex flex-col gap-8  w-4/5  bg-white max-w-[1352px] items-center p-8 rounded-t-[64px]">
         <header className="flex items-center w-4/5">
           <Navigation
             exercises={exercises}
@@ -83,7 +83,7 @@ export default function Exercise({ exerciseData }) {
             handleSetHearts={handleSetHearts}
           />
         </main>
-      </section>
+      </div>
       {showGameOver && (
         <GameOver hearts={hearts} exercises={exercises} restart={restart} />
       )}
