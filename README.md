@@ -2,14 +2,14 @@
 
 Clone the repo. First ```npm install```, then ```npm run dev```. The app is hosted at ```localhost:3000```.
 
-Demo is available soon.
+Demo: kollin-frontend-challenge.vercel.app.
 
 ## My solution
 Due to the query structure designed to retrieve a single assignment (not a list), it is not feasible to fetch all assignments at once from the parent component. Instead, each `AssignmentListItem` performs its own fetch. Any valid result from these fetches is then sorted by difficulty score and added to the `validQuestions` state initialized in the `PracticePage` component.
 
 This array contains comprehensive information for all valid questions, such as `questionText`, `answerOptions`, and dates, which are retrieved from the backend. It also includes states such as `status` and `selectedAnswer` that are updated based on user interactions.
 
-After populating the array, we display the assignments one at a time. Each assignment shows the exercise number, update date, and difficulty level, mirroring the presentation on Kollin's website. This is followed by the question text and four answer options. The "Check" button remains disabled until an answer is selected. If the answer is incorrect, the corresponding list item is highlighted in red; if correct, it is green. We automatically advance to the next question regardless of the answer's correctness. Since users can navigate between different exercises by clicking on the list, if a user skips a question and answers the last one, the test will automatically jump to the first untouched exercise, ensuring no exercise is overlooked.
+After populating the array, we display the assignments one at a time. Each assignment shows the exercise number, update date, and difficulty level, mirroring the presentation on Kollin's website. This is followed by the question text and four answer options. The "Check" button remains disabled until an answer is selected. If the answer is incorrect, the corresponding list item is highlighted in red; if correct, it is green. Also a "toast" is shown on the bottom to give the user feedback. We automatically advance to the next question regardless of the answer's correctness. Since users can navigate between different exercises by clicking on the list, if a user skips a question and answers the last one, the test will automatically jump to the first untouched exercise, ensuring no exercise is overlooked.
 
 Another feature addresses already answered exercises: they cannot be changed. The options and the check button are disabled, and a guiding text explains why this is the case. A `useEffect` hook monitors when all questions in the `validQuestions` state are no longer "untouched." When this occurs, a `CompletedModal` displays the user's results, with each question offering a "Show Solution" button that opens its own new modal `SolutionModal` containing the solution text.
 
