@@ -5,9 +5,9 @@ export const AnswerOption = ({ option, userAnswerId }) => {
 
   if (userAnswerId === option.id) {
     if (option.correct) {
-      bgColor = "bg-green-300";
+      bgColor = "bg-[#66C61C]";
     } else {
-      bgColor = "bg-red-300";
+      bgColor = "bg-[#F79009]";
     }
   }
 
