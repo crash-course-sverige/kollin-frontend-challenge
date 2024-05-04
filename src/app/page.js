@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import fetchAPI from "./API";
 import Image from "next/image";
 import Card from "./components/Card";
-import DumbComponent from "./components/DumbComponent";
 
 export default function Home() {
   const assignmentIDs = exercises;

@@ -45,7 +45,7 @@ const Card = ({
       </div>
       {lives <= 0 && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="modal bg-white rounded-lg p-8  w-1/3 flex flex-col items-center">
+          <div className="modal bg-white rounded-lg p-8 lg:m-0 w-[90%] lg:w-1/3 flex flex-col items-center">
             <h1 className="text-xl font-extrabold self-center flex gap-4 items-center mb-4">
               No lives left! <Lives lives={lives} />
             </h1>
@@ -61,6 +61,15 @@ const Card = ({
                 <span className="text-green-600 font-bold">
                   {correctGuesses}
                 </span>
+              </p>
+            </div>
+
+            <div className="mt-8">
+              <p className="text-center mt-4 font-bold flex flex-col items-center">
+                The correct solution:
+                <p className="text-green-700 text-xs font-normal mt-2 w-[80%]">
+                  <Latex>{assignment.solutionText}</Latex>
+                </p>
               </p>
             </div>
           </div>
