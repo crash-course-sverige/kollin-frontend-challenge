@@ -15,7 +15,7 @@ const ResultModal = ({ assignments, handleReset, gameOver = false }) => {
       score += assignment.difficultyScore * scoreMultiplier;
     }
 
-    if (assignment.userAnswer !== null) {
+    if (assignment.userAnswerChecked) {
       answerCount += 1;
     }
   }
