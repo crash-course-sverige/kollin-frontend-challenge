@@ -123,7 +123,21 @@ const Gameboard = ({ fetchedAssignments }) => {
       text = 'Se resultat';
     } else {
       onClick = () => {
-        setcurrentAssignmentIndex((old) => old + 1);
+        let nextAssignment = null;
+        let assignmentIndex = currentAssignmentIndex + 1;
+
+        while (nextAssignment === null) {
+          if (assignmentIndex >= assignments.length) {
+            assignmentIndex = 0;
+          }
+
+          if (!assignments[assignmentIndex].userAnswerChecked) {
+            nextAssignment = assignmentIndex;
+          } else {
+            assignmentIndex++;
+          }
+        }
+        setcurrentAssignmentIndex(nextAssignment);
         setShowAssignmentModal(false);
       };
 
