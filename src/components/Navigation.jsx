@@ -26,13 +26,13 @@ export default function Navigation({
             }  
             ${
               exercise.selectedAnswer === undefined
-                ? "bg-gray-300"
+                ? "bg-GREY"
                 : exercise.selectedAnswer ===
                   exercise.answerOptions.find(
                     (option) => option.correct === true
                   ).text
-                ? "bg-[#66C61C]"
-                : "bg-[#F79009]"
+                ? "bg-GREEN"
+                : "bg-ORANGE"
             } 
             
             h-4 flex-grow rounded-full cursor-pointer`}

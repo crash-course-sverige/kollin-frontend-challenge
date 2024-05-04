@@ -33,33 +33,29 @@ export default function CurrentExercise({
 
   return (
     <section className="flex flex-col gap-8">
-      <p className="text-black">{currentExercise.questionText}</p>
+      <p className="text-black font-crimson">{currentExercise.questionText}</p>
 
-      <fieldset className="flex flex-col items-center justify-end gap-2">
+      <fieldset className="flex flex-col items-center justify-end gap-2 font-crimson">
         {currentExercise.answerOptions.map((option) => (
           <div
             className={`
             border-2 border-[#E7E5E4]  rounded-lg p-4 w-full flex justify-center gap-2
             ${
-              (
-                currentExercise.selectedAnswer
-                  ? currentExercise.selectedAnswer === option.text
-                  : selectedOption === option.text
-              )
-                ? "bg-[#E2E8F9]  border-[#96aae7]"
+              !currentExercise.selectedAnswer && option.text === selectedOption
+                ? "bg-LIGHT_BLUE  border-BLUE"
                 : ""
             }
             ${
               currentExercise.selectedAnswer &&
               option.text === correctAnswer.text &&
               selectedOption
-                ? "bg-[#66C61C] border-[#66C61C]"
+                ? "bg-GREEN border-GREEN"
                 : ""
             } ${
               currentExercise.selectedAnswer &&
               option.text === selectedOption &&
               option.text !== correctAnswer.text
-                ? "bg-[#F79009] border-[#F79009]"
+                ? "bg-ORANGE border-ORANGE"
                 : ""
             }
             `}
@@ -89,7 +85,7 @@ export default function CurrentExercise({
         className={`py-3 rounded-lg ${
           currentExercise.selectedAnswer || !selectedOption
             ? "bg-[#7d89ae] cursor-not-allowed"
-            : "bg-[#586FB5] hover:bg-[#4660af]"
+            : "bg-DARK_BLUE hover:bg-[#4660af]"
         }`}
       >
         Check

@@ -62,7 +62,7 @@ export default async function ExerciseList() {
 
   return (
     <div>
-      <h1 className="text-5xl text-[#FDFDFC] text-center pt-10">
+      <h1 className="text-5xl text-[#FDFDFC] text-center pt-10 font-crimson">
         Trigonometriska funktioner & identiteter
       </h1>
 
