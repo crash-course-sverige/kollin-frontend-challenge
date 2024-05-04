@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const Lives = ({ lives }) => {
+  useEffect(() => {
+    if (lives < 2) {
+      document.querySelector(".text-red-600").classList.add("animate-pulse");
+    }
+  }, [lives]);
+
   return (
-    <div className="text-red-600 text-2xl flex items-center">
+    <div id="icon" className="text-red-600 text-2xl flex items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="32"

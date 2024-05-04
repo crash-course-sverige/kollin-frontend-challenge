@@ -29,8 +29,8 @@ const Single = ({ index, assignment, current, answers, setIndex }) => {
           backgroundColor: answer
             ? answer.correct
               ? "green"
-              : "red"
-            : "lightgrey",
+              : "orange"
+            : "#D7D3D0",
 
           outline: current ? "3px solid #2F80ED" : "none",
           outlineOffset: "1px",

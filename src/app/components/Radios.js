@@ -108,7 +108,7 @@ const Radios = ({
       {outcome === false &&
         !!assignment.hints &&
         assignment.hints?.length > 0 && (
-          <p className="text-red-700 text-xs h-40 overflow-scroll">
+          <p className="text-orange-700 text-xs h-40 overflow-scroll">
             <Latex>{assignment.hints[hintIndex]}</Latex>
           </p>
         )}
@@ -128,7 +128,7 @@ const Option = ({ option, selected, setSelected, outcome, setOutcome }) => {
     } else if (selected === option.text && outcome === true) {
       return "green";
     } else if (selected === option.text && outcome === false) {
-      return "red";
+      return "orange";
     } else {
       return "";
     }
