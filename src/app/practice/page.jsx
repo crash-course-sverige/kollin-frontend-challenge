@@ -61,14 +61,16 @@ const getAllAssignments = async () => {
 };
 
 const Page = async () => {
-  const assignments = await getAllAssignments();
+  const fetchedAssignments = await getAllAssignments();
 
   return (
     <div className='flex flex-col items-center justify-end h-screen text-slate-900'>
       <h1 className='text-5xl mb-8 text-light'>
         Trigonometriska funktioner & identiteter
       </h1>
-      <Gameboard assignments={assignments} />
+      <div className='grid grid-rows-[2rem_auto_20rem_2rem] h-5/6 min-h-[700px] w-5/6 min-w-[800px] max-w-[1024px] px-32 py-12 bg-white rounded-t-3xl gap-4'>
+        <Gameboard fetchedAssignments={fetchedAssignments} />
+      </div>
     </div>
   );
 };
