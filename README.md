@@ -2,7 +2,7 @@
 
 Clone the repo. First ```npm install```, then ```npm run dev```. The app is hosted at ```localhost:3000```.
 
-Demo: kollin-frontend-challenge.vercel.app.
+[Click here for the quick demo](kollin-frontend-challenge.vercel.app)
 
 ## My solution
 Due to the query structure designed to retrieve a single assignment (not a list), it is not feasible to fetch all assignments at once from the parent component. Instead, each `AssignmentListItem` performs its own fetch. Any valid result from these fetches is then sorted by difficulty score and added to the `validQuestions` state initialized in the `PracticePage` component.
