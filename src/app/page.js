@@ -12,7 +12,7 @@ export default function Home() {
   const [assignments, setAssignments] = useState([]);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
-  //add lives
+  const [lives, setLives] = useState(3);
 
   useEffect(() => {
     const fetchAssignmentsData = async () => {
@@ -61,6 +61,9 @@ export default function Home() {
           index={index}
           answers={answers}
           setAnswers={setAnswers}
+          setLives={setLives}
+          lives={lives}
+          setIndex={setIndex}
         />
       );
   }

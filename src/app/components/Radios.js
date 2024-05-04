@@ -2,7 +2,16 @@ import React from "react";
 import Latex from "react-latex";
 import { useState } from "react";
 
-const Radios = ({ assignment, selected, setSelected, answers, setAnswers }) => {
+const Radios = ({
+  assignment,
+  selected,
+  setSelected,
+  answers,
+  setAnswers,
+  setLives,
+  index,
+  setIndex,
+}) => {
   const [outcome, setOutcome] = useState(null);
   const [hintIndex, setHintIndex] = useState(0);
 
@@ -11,17 +20,42 @@ const Radios = ({ assignment, selected, setSelected, answers, setAnswers }) => {
       let answer = assignment.answerOptions.find(
         (option) => option.text === selected
       );
+      let updatedAnswers = [...answers];
+      let existingAnswerIndex = updatedAnswers.findIndex(
+        (answer) => answer.id === assignment.id
+      );
       if (answer.correct) {
-        setAnswers([
-          ...answers,
-          { id: assignment.id, answer: selected, correct: true },
-        ]);
+        if (existingAnswerIndex !== -1) {
+          updatedAnswers[existingAnswerIndex] = {
+            id: assignment.id,
+            answer: selected,
+            correct: true,
+          };
+        } else {
+          updatedAnswers.push({
+            id: assignment.id,
+            answer: selected,
+            correct: true,
+          });
+        }
+        setAnswers(updatedAnswers);
         setOutcome(true);
       } else {
-        setAnswers([
-          ...answers,
-          { id: assignment.id, answer: selected, correct: true },
-        ]);
+        if (existingAnswerIndex !== -1) {
+          updatedAnswers[existingAnswerIndex] = {
+            id: assignment.id,
+            answer: selected,
+            correct: false,
+          };
+        } else {
+          updatedAnswers.push({
+            id: assignment.id,
+            answer: selected,
+            correct: false,
+          });
+        }
+        setLives((lives) => lives - 1);
+        setAnswers(updatedAnswers);
         setOutcome(false);
         setHintIndex((hintIndex + 1) % 5);
       }
@@ -45,23 +79,39 @@ const Radios = ({ assignment, selected, setSelected, answers, setAnswers }) => {
           ></Option>
         ))}
       </ul>
-      <button
-        className="bg-[#586FB5] text-white shadow-lg rounded-md py-2 px-4 hover:bg-[#4A5F9C] active:bg-[#2c385d]"
-        onClick={handleClick}
-      >
-        Check
-      </button>
-      {!selected && <p className="text-red-500">Please select an option</p>}
+      {outcome !== true && (
+        <button
+          className="bg-[#586FB5] text-white shadow-lg rounded-md py-2 px-4 hover:bg-[#4A5F9C] active:bg-[#2c385d]"
+          onClick={handleClick}
+        >
+          Check
+        </button>
+      )}
+      {outcome === true && (
+        <button
+          className="border-2 border-[#586FB5] shadow-lg rounded-md py-2 px-4 hover:bg-[#f3f6ff] active:border-[#2c385d] text-[#4A5F9C]"
+          onClick={() => setIndex((index + 1) % 5)}
+        >
+          Next
+        </button>
+      )}
+      {!selected && (
+        <p className="text-gray-500 font-extralight self-center">
+          Please select an option
+        </p>
+      )}
       {outcome === true && (
         <p className="text-green-700 text-xs h-48 overflow-scroll">
           <Latex>{assignment.solutionText}</Latex>
         </p>
       )}
-      {outcome === false && (
-        <p className="text-red-700 text-xs h-40 overflow-scroll">
-          <Latex>{assignment.hints[hintIndex]}</Latex>
-        </p>
-      )}
+      {outcome === false &&
+        !!assignment.hints &&
+        assignment.hints?.length > 0 && (
+          <p className="text-red-700 text-xs h-40 overflow-scroll">
+            <Latex>{assignment.hints[hintIndex]}</Latex>
+          </p>
+        )}
     </div>
   );
 };
@@ -86,7 +136,7 @@ const Option = ({ option, selected, setSelected, outcome, setOutcome }) => {
 
   return (
     <li
-      className="flex flex-row gap-4 py-2 rounded-md w-full border-2 pl-[35%] hover:bg-gray-100 !cursor-pointer"
+      className="flex flex-row gap-4 py-2 rounded-md w-full border-2 justify-center hover:bg-gray-100 !cursor-pointer"
       style={{
         backgroundColor: selected === option.text ? "#E2E8F9" : "",
         borderColor: getBorderColor(),
