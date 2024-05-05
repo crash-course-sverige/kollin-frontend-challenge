@@ -1,14 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const Lives = ({ lives }) => {
+  const [animate, setAnimate] = useState(false);
+  const [prevLives, setPrevLives] = useState(lives);
+
   useEffect(() => {
-    if (lives < 2) {
-      document.querySelector(".text-red-600").classList.add("animate-pulse");
+    if (lives < prevLives) {
+      setAnimate(true);
+      setTimeout(() => setAnimate(false), 1000); // remove the animation after 1 second
     }
+    setPrevLives(lives); // update previous lives count
   }, [lives]);
 
   return (
-    <div id="icon" className="text-red-600 text-2xl flex items-center">
+    <div
+      id="icon"
+      className={`text-red-600 text-2xl flex items-center ${
+        animate ? "animate-heartbeat" : ""
+      } ${lives === 1 ? "animate-pulse" : ""}`}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="32"
