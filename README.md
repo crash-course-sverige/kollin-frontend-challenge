@@ -1,7 +1,30 @@
+# Installation
+
+To get started with the app, follow these steps:
+
+### Step 1: Clone the Repository
+
+Clone the repository to your local machine
+
+### Step 2: Install Dependencies
+
+Navigate to the project directory and install the required dependencies by running: `npm install`
+If you encounter permission issues, try running the command `sudo npm install`
+
+### Step 3: Run the Application
+
+Once the dependencies are installed successfully, you can start the development server by running: `npm run dev`
+This command will build the app and start a development server. You can then access the app in your web browser at `http://localhost:3000` or a different port specified by the application.
+
+### Additional Notes
+
+- Ensure that you have Node.js and npm installed on your system before proceeding.
+- Make sure the port 3000 is available and not in use by any other application.
+- If you encounter any errors during the installation or execution process, refer to the project's documentation or seek assistance from the project maintainers.
+
 # Application Architecture
 
 ![Main Interface](https://github.com/andreamicheli/kollin-frontend-challenge-amicheli/blob/main/public/imageMD.png)
-
 
 This application is built using Next.js, a React framework that enables server-side rendering and generating static websites for React-based web applications.
 For styling purposes, the library Tailwind was used, and for specific templates also the library react-dom-confetti and react-latex.
@@ -16,7 +39,7 @@ For styling purposes, the library Tailwind was used, and for specific templates 
 
 - `Radio.js`: This component displays a set of radio buttons for user interaction. It handles user input and triggers events based on the user's selection.
 
-- `Lives.js`: This component displays the number of lives left. 
+- `Lives.js`: This component displays the number of lives left.
 
 - `Progress.js`: This component displays the user's progress and handles navigation among the assignments.
 
