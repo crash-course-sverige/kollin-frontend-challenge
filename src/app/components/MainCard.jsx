@@ -171,9 +171,13 @@ const MainCard = ({
           </Button>
         ) : (
           <>
-            <h2>
-              The correct answer was: {answers.find((ans) => ans.correct).text}{" "}
-            </h2>
+            <h2 className="mt-6">The correct answer was: </h2>
+            <KatexSpan
+              className="m-6"
+              text={answers.find((ans) => ans.correct).text}
+            >
+              The coirrect
+            </KatexSpan>
             <Button onPress={restartQuestion} color="primary" className="m-4">
               Restart
             </Button>
