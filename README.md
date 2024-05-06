@@ -1,139 +1,60 @@
+# Installation
 
-# A mini Kollin project
+To get started with the app, follow these steps:
 
+### Step 1: Clone the Repository
 
+Clone the repository to your local machine
 
+### Step 2: Install Dependencies
 
-- [A mini Kollin project](#a-mini-kollin-project)
-  - [The task](#the-task)
-    - [Objective](#objective)
-    - [Mockup](#mockup)
-    - [Instructions](#instructions)
-  - [Resources](#resources)
-    - [R1. GraphQL API](#r1-graphql-api)
-    - [R2. Exercises](#r2-exercises)
-  - [Assessment criteria](#assessment-criteria)
-  - [Submission](#submission)
+Navigate to the project directory and install the required dependencies by running: `npm install`
+If you encounter permission issues, try running the command `sudo npm install`
 
+### Step 3: Run the Application
 
+Once the dependencies are installed successfully, you can start the development server by running: `npm run dev`
+This command will build the app and start a development server. You can then access the app in your web browser at `http://localhost:3000` or a different port specified by the application.
 
+### Additional Notes
 
-Kollin is a startup that provides accessible and interactive study material to university students. Our mission is to make studying at the university more fun and engaging for everyone!
+- Ensure that you have Node.js and npm installed on your system before proceeding.
+- Make sure the port 3000 is available and not in use by any other application.
+- If you encounter any errors during the installation or execution process, refer to the project's documentation or seek assistance from the project maintainers.
 
-## The task
+# Application Architecture
 
-### Objective
-The objective is to create a view that displays a list of Exercises, the user can click on an exercise in the list to view it. Each exercise is a Multiple-choice-question, the user can select an option and press a button to check if their answer is correct. Kind of like Duolingo if you have used it!
+![Main Interface](https://github.com/andreamicheli/kollin-frontend-challenge-amicheli/blob/main/public/imageMD.png)
 
-### Mockup
+This application is built using Next.js, a React framework that enables server-side rendering and generating static websites for React-based web applications.
+For styling purposes, the library Tailwind was used, and for specific templates also the library react-dom-confetti and react-latex.
 
-![](mockup.png)
+## Directory Structure
 
-Please see the full interactive figma mockup here:
-https://www.figma.com/file/9rDWfun0I1TdEfQt5vM4kD/Untitled?type=design&node-id=1%3A6669&mode=design&t=sqgMG34VPQ82y9zs-1
+- `API.js`: This file contains the function for fetching data from the API. It uses the Fetch API to make HTTP requests and returns the response data.
 
-### Instructions
-Please see referred resources in the [Resources](#resources) section below
+- `page.js`: This is the main page component of the application. It uses the `fetchAPI` function from `API.js` to fetch data and pass it to the other components.
 
-1. Fork this repository
-   > [Optional] install a component library of your choice (or use custom-built components) 
-   > We are currently using: Next UI (https://nextui.org/)
+- `Card.js`: This component displays a card with information. It receives data as props from `page.js` and displays it.
 
-2. Create the exercise list in app/practice/page.jsx
+- `Radio.js`: This component displays a set of radio buttons for user interaction. It handles user input and triggers events based on the user's selection.
 
-3. Get the exercises from the API 
-   - See: [R1](#r1-graphql-api) for GraphQL API access
-   - See: [R2](#r2-exercises) section for data structure specification [] 
-4. Render the list of exercises 
-5. Automatically redirect to the first exercise in the list. 
-   - The list of exercises should remain intact.
-   - When the user clicks on an exercise: redirect to that exercise
-6. Show the selected Exercise and all metadata 
-7. Show the interactive options
-8. Provide feedback to the user if they answered correctly or incorrectly when they submit 
-9. Reflect their progress in the list of exercises 
-10. The user has 3 hearts, if they answer incorrectly they lose a heart. 
-    > If they lose all hearts, show a message that they have lost and show an overview of their progress
+- `Lives.js`: This component displays the number of lives left.
 
----
+- `Progress.js`: This component displays the user's progress and handles navigation among the assignments.
 
-## Resources
+## Important Props
 
-### R1. GraphQL API
+It was chosen, due to the small scope of the application, a simple props-to-child approach for the data flow in the system. Here is an overview of the main props used.
 
-We use GraphQL for most of our data fetching. You can access the API at the following endpoint:
+- **assignment:** This prop contains the current assignment or question data. It is used to display the question and options to the user.
 
-```
-    https://jgsbshesm5advigzznyid7juny.appsync-api.eu-north-1.amazonaws.com/graphql
-```
+- **assignments:** This prop contains the list of all the assignments fetched from the API.
 
-You'll need to authenticate with the following header:
+- **selected:** This prop is a state variable that indicates whether an option has been selected. It is used to track the user's current selection.
 
-```js
-    {
-        Authorization: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhTVVAwa3ZaUHl3S296bkU1SkNGMW1KbnJnT29CdTRjVHBTMDViQWc4RXMifQ.eyJzdWIiOiIyNjQyMSIsImlkIjoyNjQyMSwiZiI6IjlhOTJmNjMxYzNmNjNkZDgzOGNiNzZjZTcwNDZiNmM5IiwibWF4QWxsb3dlZERldmljZXMiOjEsImdyb3VwcyI6WyJQVUJMSUMiXSwiYXVkIjoiaW50ZXJuYWwiLCJleHAiOjE3MTcxMDE0MDgsImlhdCI6MTcxNDUwOTQwOCwiaXNzIjoiaHR0cHM6Ly9hcGkudG50b3Iuc2Uvb2lkYyJ9.QmNBGduFAihbzKd2ETRQ1DukxHta8_G-CRK8RHtLhAqFDcD9pcK6mbdZCRYx-TKG2Ovyi1LS7MpcG-mYNsq8kNrMOHWVgJtDNyJEjgdYQMFZwsfGikKu5KRNHHf1j8g8tYqEcT7Yw_Azv9uMeiGU1CcL1jGRBhbaqVo3G1pXCxVupHbHsKQn237DC7n2fbaiVVM2S2J1bOFSATbfj35yDJmgZzLOQWqGebl4UkfFZcgWImWcj1IwVRogrCWRK5HZbeElgIu02mlcD8XrFpOV1oFgEnMiMmHjdbgPvm_RX4-FkJTJXUXflVRQYhBFVtOH9bf-t1FTY8FM7kV19uRhHw"
-    }
-```
+- **answers:** This prop is a state variable that stores the user's answers. It is used to keep track of the user's answers throughout the game, and their correct or incorrect condition.
 
-The relevant queries are given below
+- **index:** This prop represents the current index or position in the list of assignments. It is used to navigate through the assignments.
 
- Note that in the API, an 'exercise' is called `Assignment`
-
-```graphql
-  query GetAssignment($id: ID!) {
-    getAssignment(id: $id) {
-      id
-      difficultyScore
-      questionText
-      solutionText
-      hints
-      answerOptions {
-        id
-        text
-        correct
-      }
-      createdAt
-      updatedAt
-    }
-  }
-```
-
-### R2. Exercises
-
-The exercises are provided in the file [exercises.json](exercises.json). One of the ID:s in the list is not valid, so you should handle this case gracefully.
-
-Here is an explanation of the fields in the Assignment object:
-
-| Field                   | Type           | Description                              |
-| ----------------------- | -------------- | ---------------------------------------- |
-| `id`                    | String         | The ID of the exercise                   |
-| `difficultyScore`       | Float          | The difficulty of the exercise [1.0-4.0] |
-| `questionText`          | String         | The question text                        |
-| `solutionText`          | String         | The solution text                        |
-| `hints`                 | Array          | Hints for the exercise                   |
-| `answerOptions`         | Array\<Object> | The answer options                       |
-| `answerOptions.id`      | String         | The ID of the answer option              |
-| `answerOptions.text`    | String         | The text of the answer option            |
-| `answerOptions.correct` | Boolean        | If the answer option is correct          |
-
-
-
----
-
-## Assessment criteria
-
-The code should be
-
-- clean: no commented code, no linting errors and prettier formatting
-- maintainable: easy to understand and extend
-- efficient: no unnecessary re-renders or API calls that could be avoided
-- reusable: components should be reusable and modular to avoid repetition. 
-
-## Submission
-
-Please submit your solution by creating a pull request to this repository. You can also add a README.md file to explain your solution and any additional notes you would like to add. Good luck!
-
-
---- 
-
-
+- **lives:** This prop represents the number of lives of the users. When they reach 0, a modal is shown and the user can't play anymore.

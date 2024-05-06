@@ -1,16 +1,69 @@
-import Image from "next/image"
+"use client";
+import exercises from "../../exercises.json";
+import { useEffect, useState } from "react";
+import fetchAPI from "./API";
+import Image from "next/image";
+import Card from "./components/Card";
 
 export default function Home() {
-    return (
+  const assignmentIDs = exercises;
+  const [isLoading, setIsLoading] = useState(true);
+  const [assignments, setAssignments] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [answers, setAnswers] = useState([]);
+  const [lives, setLives] = useState(3);
 
-        <div className="h-screen w-screen flex flex-col items-center justify-center p-24 bg-[#202746]">
+  useEffect(() => {
+    const fetchAssignmentsData = async () => {
+      try {
+        let data = await fetchAPI(assignmentIDs);
+        console.log("fetched data:", data);
 
-            <img
+        setAssignments(data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(null);
+        console.error("Error fetching assignments:", error);
+      }
+    };
 
-                src="https://d1mgntrf3vaj6d.cloudfront.net/kollin_logo_white.svg"
-                className="w-64"
-            />
+    fetchAssignmentsData();
+  }, []);
+
+  return (
+    <div className="h-screen w-screen flex flex-col items-center justify-center p-8 bg-[#586FB5]">
+      {isLoading || assignments.length <= 0 ? (
+        <Image
+          src="https://media0.giphy.com/media/CrrOqaQFuhnTdByaYa/giphy.gif?cid=6c09b9527c05r8221e4i2u39tm1kk9fys4699msfr0wb61wq&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"
+          alt="loading"
+          width={80}
+          height={80}
+        />
+      ) : (
+        <div className="flex justify-center items-center flex-col h-screen">
+          <p className="lg:pt-8 lg:pb-16 pb-2 text-white lg:text-4xl text-base">
+            Trigonometriska funktioner & identiteter
+          </p>
+          {Content()}
         </div>
+      )}
+    </div>
+  );
 
-    );
+  function Content() {
+    if (!!assignments && assignments.length > 0 && !!assignments[index])
+      return (
+        <Card
+          assignment={assignments[index]}
+          assignments={assignments}
+          key={assignments[index].id}
+          index={index}
+          answers={answers}
+          setAnswers={setAnswers}
+          setLives={setLives}
+          lives={lives}
+          setIndex={setIndex}
+        />
+      );
+  }
 }
