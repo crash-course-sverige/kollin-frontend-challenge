@@ -15,10 +15,14 @@ const ids = [
 
 export default function CrashCourse() {
 
+
+
     const [assignments, setAssignments] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [answer, setAnswer] = useState(null)
+    const [answerIndex, setAnswerIndex] = useState(0)
 
-    async function getAssignments(assignmentId){
+    async function getAssignments(assignmentId) {
         const endpoint =
             process.env.NEXT_PUBLIC_ENDPOINT
 
@@ -66,8 +70,15 @@ export default function CrashCourse() {
             try {
                 const assignmentsData = await Promise.all(assignmentPromises);
                 const filteredAssignments = assignmentsData.filter(assignment => assignment.getAssignment !== null);
-                console.log(filteredAssignments)
-                setAssignments(filteredAssignments);
+
+                // Add 'answered' and 'correct' flags to each assignment
+                const assignmentsWithFlags = filteredAssignments.map(assignment => ({
+                    ...assignment,
+                    answered: false,
+                }));
+
+                console.log(assignmentsWithFlags);
+                setAssignments(assignmentsWithFlags);
 
             } catch (error) {
                 console.log(error);
@@ -77,33 +88,57 @@ export default function CrashCourse() {
         fetchAssignments();
     }, []);
 
+
     const handleItemClick = (index) => {
-        setCurrentIndex(index); 
+        setCurrentIndex(index);
     };
+
+    const handleAnswerClick = (index, option) => {
+        setAnswerIndex(index)
+        setAnswer(option)
+    }
+
+    const handleAnswerCheck = (option) => {
+        console.log(option.answered)
+        option.answered = true
+    }
 
     return (
 
         <div style={{ justifyContent: "center", display: "flex", alignItems: "center", height: "100vh" }}>
             {/*Inner card div, holds content.*/}
-            <div style={{ display: "flex", background: "white", width: "60%", height: "80vh", justifyContent: "center", alignItems: "center", borderRadius: "50px", flexDirection: "column" }}>
+            <div style={{ display: "flex", background: "white", width: "60%", height: "80vh", justifyContent: "center", alignItems: "center", borderRadius: "50px", flexDirection: "column", gap: 10 }}>
 
                 {/*Content div, 50% of card size, contains all content. */}
-                <div style={{ display: "flex", width: "100%", flexDirection: "row", gap: 4, justifyContent: "center" }}>
+                <div style={{ display: "flex", width: "80%", flexDirection: "row", gap: 4, justifyContent: "center" }}>
                     {assignments.map((assignment, index) => (
                         <Item
                             difficulty={assignment.getAssignment.difficultyScore}
                             current={currentIndex == index}
                             onClick={() => handleItemClick(index)}
+                            correct={assignment.answered ? assignment.correct: null}
+                            attempted={assignment.answered}
                         />
                     ))}
                 </div>
 
-                <div style={{ width: "100%", height: "30%", flexWrap: "wrap", alignSelf: "center", padding: 80 }}>
-                    <span>
+                <div style={{ width: "100%", height: "30%", flexDirection: "row", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <span style={{ textAlign: "left", width: "80%" }}>
                         {assignments.length > 0 ? assignments[currentIndex].getAssignment.questionText : ""}
                     </span>
                 </div>
 
+                <div style={{ width: "100%", height: "30%", flexDirection: "column", display: "flex", alignItems: "center", gap: 10 }}>
+                    {assignments.length > 0 ? assignments[currentIndex]?.getAssignment.answerOptions.map((option, index) => (
+                        <button style={{ width: "80%", height: 56, outline: "solid", outlineWidth: "thin", borderRadius: 2, outlineColor: answerIndex == index ? "ActiveBorder" : "#E7E5E4" }} key={option.id} onClick={() => handleAnswerClick(index, option)}>
+                            {option.text}
+                        </button>
+                    )) : ""}
+                </div>
+
+                <button style={{ width: "80%", height: 48, outline: "solid", outlineWidth: "thin", borderRadius: 2, background: "#586FB5", color: "white" }} onClick={() => { handleAnswerCheck(answer) }}>
+                    Check
+                </button>
 
             </div>
         </div>
