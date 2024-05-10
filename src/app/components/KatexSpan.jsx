@@ -18,7 +18,7 @@ export default function KatexSpan({ text, ...delegated }) {
   }, [text]);
 
   return (
-    <div ref={katexTextRef} {...delegated}>
+    <div style={{ color: "black" }} ref={katexTextRef} {...delegated}>
       {text}
     </div>
   );
