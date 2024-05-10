@@ -129,7 +129,7 @@ const MainCard = ({
                     Hint
                   </ModalHeader>
                   <ModalBody>
-                    <p>{hint[currentHintIndex]}</p>
+                    <KatexSpan text={hint[currentHintIndex]}></KatexSpan>
                   </ModalBody>
                   <ModalFooter>
                     <Button color="danger" variant="light" onPress={onClose}>
