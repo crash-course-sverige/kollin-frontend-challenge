@@ -17,6 +17,8 @@ const ids = [
   "9de29654-bc7a-4552-a367-f438cbd1ce0d",
 ];
 
+const scoreToColor = { 1: "#66C61C", 2: "#FFD700", 3: "#F79009", 4: "#A020F0" };
+
 export default function CrashCourse() {
   const [assignments, setAssignments] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -86,8 +88,9 @@ export default function CrashCourse() {
     fetchAssignments();
   }, []);
 
-  const handleItemClick = (index) => {
+  const handleProgressItemClick = (index) => {
     setCurrentIndex(index);
+    setAnswerIndex(0);
   };
 
   const handleAnswerClick = (index, option) => {
@@ -105,7 +108,7 @@ export default function CrashCourse() {
 
   return (
     <div className="OuterWindow">
-        <Title title={"Trigonometriska funktioner & Identiteter"} />
+      <Title title={"Trigonometriska funktioner & Identiteter"} />
       <div className="MainContainer">
         <div className="ProgressBar">
           {assignments.map((assignment, index) => (
@@ -114,15 +117,59 @@ export default function CrashCourse() {
               key={assignment.getAssignment.id}
               difficulty={assignment.getAssignment.difficultyScore}
               current={currentIndex == index}
-              onClick={() => handleItemClick(index)}
+              onClick={() => handleProgressItemClick(index)}
               correct={assignment.correct}
               attempted={assignment.answered}
             />
           ))}
         </div>
 
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 12,
+            width:"59%"
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap:12 }}>
+            <span>Question:</span>
+            {currentIndex + 1}
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap:12 }}>
+            <span>Difficulty:</span>
+            <div
+              style={{
+                borderRadius: 50,
+                width: 40,
+                height: 40,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                background:
+                  assignments.length > 0
+                    ? scoreToColor[
+                        Math.round(
+                          assignments[currentIndex]?.getAssignment
+                            .difficultyScore
+                        )
+                      ]
+                    : "white",
+              }}
+            >
+              <span style={{ color: "white" }}>
+                {assignments.length > 0
+                  ? assignments[currentIndex].getAssignment.difficultyScore
+                  : 0}
+              </span>
+            </div>
+          </div>
+        </div>
+
         <div className="AssignmentContainer">
-          <Latex >
+          <Latex>
             {assignments.length > 0
               ? assignments[currentIndex].getAssignment.questionText
               : ""}
