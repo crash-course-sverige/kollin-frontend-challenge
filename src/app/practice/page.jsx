@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import Item from "../components/item"
+import ProgressBar from "../components/ProgressBar"
 
 
 const ids = [
@@ -19,7 +19,7 @@ export default function CrashCourse() {
 
     const [assignments, setAssignments] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [answer, setAnswer] = useState(null)
+    const [answer, setAnswer] = useState(0)
     const [answerIndex, setAnswerIndex] = useState(0)
 
     async function getAssignments(assignmentId) {
@@ -70,11 +70,10 @@ export default function CrashCourse() {
             try {
                 const assignmentsData = await Promise.all(assignmentPromises);
                 const filteredAssignments = assignmentsData.filter(assignment => assignment.getAssignment !== null);
-
-                // Add 'answered' and 'correct' flags to each assignment
                 const assignmentsWithFlags = filteredAssignments.map(assignment => ({
                     ...assignment,
                     answered: false,
+                    correct: null
                 }));
 
                 console.log(assignmentsWithFlags);
@@ -99,48 +98,58 @@ export default function CrashCourse() {
     }
 
     const handleAnswerCheck = (option) => {
-        console.log(option.answered)
-        option.answered = true
-    }
+        const correct = option.correct;
+        const updatedAssignments = [...assignments];
+        updatedAssignments[currentIndex].answered = true;
+        updatedAssignments[currentIndex].correct = correct;
+        setAssignments(updatedAssignments);
+        console.log(updatedAssignments[currentIndex]);
+    };
+
 
     return (
+        <div style={{ justifyContent: "flex-end", display: "flex", alignItems: "center", height: "100vh", flexDirection: "column" }}>
+            {/*Content container div, holds content.*/}
+            <div style={{ display: "flex", background: "white", width: "95%", height: "90vh", justifyContent: "center", alignItems: "center", borderRadius: "50px 50px 0 0", flexDirection: "column", gap: "32px", padding: "32px, 32px, 16px, 32px" }}>
 
-        <div style={{ justifyContent: "center", display: "flex", alignItems: "center", height: "100vh" }}>
-            {/*Inner card div, holds content.*/}
-            <div style={{ display: "flex", background: "white", width: "60%", height: "80vh", justifyContent: "center", alignItems: "center", borderRadius: "50px", flexDirection: "column", gap: 10 }}>
-
-                {/*Content div, 50% of card size, contains all content. */}
-                <div style={{ display: "flex", width: "80%", flexDirection: "row", gap: 4, justifyContent: "center" }}>
+                {/* Inner Content div, 50% of card size, contains all content. */}
+                <div style={{ width: "80%", justifyContent: "center", flexDirection: "row", display: "flex", gap: 4 }}>
                     {assignments.map((assignment, index) => (
-                        <Item
+                        <ProgressBar
+                            totalItems={assignments.length > 0 ? assignments.length : 1}
+                            key={assignment.getAssignment.id}
                             difficulty={assignment.getAssignment.difficultyScore}
                             current={currentIndex == index}
                             onClick={() => handleItemClick(index)}
-                            correct={assignment.answered ? assignment.correct: null}
+                            correct={assignment.correct}
                             attempted={assignment.answered}
+
                         />
                     ))}
                 </div>
 
-                <div style={{ width: "100%", height: "30%", flexDirection: "row", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <span style={{ textAlign: "left", width: "80%" }}>
+                <div style={{ width: "80%", height:"25%" ,flexDirection: "row", display: "flex", alignItems: "center", justifyContent: "flex-start", padding: "0 0 20px 0" }}>
+                    <span style={{ textAlign: "left", width: "100%" }}>
                         {assignments.length > 0 ? assignments[currentIndex].getAssignment.questionText : ""}
                     </span>
                 </div>
 
-                <div style={{ width: "100%", height: "30%", flexDirection: "column", display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ width: "80%", flexDirection: "column", display: "flex", alignItems: "center", gap: 10, padding: "0 0 20px 0"}}>
                     {assignments.length > 0 ? assignments[currentIndex]?.getAssignment.answerOptions.map((option, index) => (
-                        <button style={{ width: "80%", height: 56, outline: "solid", outlineWidth: "thin", borderRadius: 2, outlineColor: answerIndex == index ? "ActiveBorder" : "#E7E5E4" }} key={option.id} onClick={() => handleAnswerClick(index, option)}>
+                        <button style={{ width: "100%", height: 56, outline: "solid", outlineWidth: "thin", borderRadius: 2, outlineColor: answerIndex == index ? "ActiveBorder" : "#E7E5E4" }} key={option.id} onClick={() => handleAnswerClick(index, option)}>
                             {option.text}
                         </button>
                     )) : ""}
                 </div>
 
-                <button style={{ width: "80%", height: 48, outline: "solid", outlineWidth: "thin", borderRadius: 2, background: "#586FB5", color: "white" }} onClick={() => { handleAnswerCheck(answer) }}>
+                <button style={{ width: "80%", height: "48px", outline: "solid", outlineWidth: "thin", borderRadius: 2, background: "#586FB5", color: "white", padding: "0 0 20px 0" }} onClick={() => { handleAnswerCheck(answer) }}>
                     Check
                 </button>
 
             </div>
         </div>
-    )
+    );
+
 }
+
+
