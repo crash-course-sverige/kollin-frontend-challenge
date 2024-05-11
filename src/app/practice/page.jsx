@@ -1,6 +1,9 @@
 "use client"
 import { useEffect, useState } from "react"
 import ProgressBar from "../components/ProgressBar"
+import MainButton from "../components/Buttons/MainButton";
+import OptionPressable from "../components/Buttons/OptionPressable";
+import "./styles.css"
 
 
 const ids = [
@@ -14,8 +17,6 @@ const ids = [
 
 
 export default function CrashCourse() {
-
-
 
     const [assignments, setAssignments] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -75,8 +76,6 @@ export default function CrashCourse() {
                     answered: false,
                     correct: null
                 }));
-
-                console.log(assignmentsWithFlags);
                 setAssignments(assignmentsWithFlags);
 
             } catch (error) {
@@ -103,17 +102,15 @@ export default function CrashCourse() {
         updatedAssignments[currentIndex].answered = true;
         updatedAssignments[currentIndex].correct = correct;
         setAssignments(updatedAssignments);
-        console.log(updatedAssignments[currentIndex]);
     };
 
 
     return (
-        <div style={{ justifyContent: "flex-end", display: "flex", alignItems: "center", height: "100vh", flexDirection: "column" }}>
-            {/*Content container div, holds content.*/}
-            <div style={{ display: "flex", background: "white", width: "95%", height: "90vh", justifyContent: "center", alignItems: "center", borderRadius: "50px 50px 0 0", flexDirection: "column", gap: "32px", padding: "32px, 32px, 16px, 32px" }}>
+        <div className="OuterWindow">
 
-                {/* Inner Content div, 50% of card size, contains all content. */}
-                <div style={{ width: "80%", justifyContent: "center", flexDirection: "row", display: "flex", gap: 4 }}>
+            <div className="MainContainer">
+
+                <div className="ProgressBar">
                     {assignments.map((assignment, index) => (
                         <ProgressBar
                             totalItems={assignments.length > 0 ? assignments.length : 1}
@@ -128,23 +125,19 @@ export default function CrashCourse() {
                     ))}
                 </div>
 
-                <div style={{ width: "80%", height:"25%" ,flexDirection: "row", display: "flex", alignItems: "center", justifyContent: "flex-start", padding: "0 0 20px 0" }}>
+                <div className="AssignmentContainer">
                     <span style={{ textAlign: "left", width: "100%" }}>
                         {assignments.length > 0 ? assignments[currentIndex].getAssignment.questionText : ""}
                     </span>
                 </div>
 
-                <div style={{ width: "80%", flexDirection: "column", display: "flex", alignItems: "center", gap: 10, padding: "0 0 20px 0"}}>
+                <div className="OptionContainer">
                     {assignments.length > 0 ? assignments[currentIndex]?.getAssignment.answerOptions.map((option, index) => (
-                        <button style={{ width: "100%", height: 56, outline: "solid", outlineWidth: "thin", borderRadius: 2, outlineColor: answerIndex == index ? "ActiveBorder" : "#E7E5E4" }} key={option.id} onClick={() => handleAnswerClick(index, option)}>
-                            {option.text}
-                        </button>
+                        <OptionPressable text={option.text} key={option.id} onClick={() => handleAnswerClick(index, option)} active={answerIndex == index} />
                     )) : ""}
                 </div>
 
-                <button style={{ width: "80%", height: "48px", outline: "solid", outlineWidth: "thin", borderRadius: 2, background: "#586FB5", color: "white", padding: "0 0 20px 0" }} onClick={() => { handleAnswerCheck(answer) }}>
-                    Check
-                </button>
+                <MainButton prompt={"Check"} onClick={() => { handleAnswerCheck(answer) }} />
 
             </div>
         </div>

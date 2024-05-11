@@ -1,0 +1,48 @@
+.MainContainer {
+    display: flex;
+    background-color: white;
+    width: 95%;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px 50px 0px 0px;
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px 32px 16px 32px;
+}
+
+.OuterWindow {
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.ProgressBar {
+    display: flex;
+    width: 75%;
+    justify-content: center;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.AssignmentContainer {
+    width: 75%;
+    height: 25%;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 20px 0;
+}
+
+.OptionContainer {
+    width: 75%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 0 20px 0;
+}
