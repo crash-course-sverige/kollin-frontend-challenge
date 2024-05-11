@@ -1,3 +1,5 @@
+import "katex/dist/katex.min.css";
+import Latex from "react-latex-next";
 export default function OptionPressable({ onClick, active, text }) {
   return (
     <button
@@ -12,7 +14,7 @@ export default function OptionPressable({ onClick, active, text }) {
       }}
       onClick={onClick}
     >
-      {text}
+      <Latex>{text}</Latex>
     </button>
   );
 }

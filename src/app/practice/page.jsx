@@ -4,6 +4,8 @@ import ProgressBar from "../components/ProgressBar";
 import MainButton from "../components/Buttons/MainButton";
 import OptionPressable from "../components/Buttons/OptionPressable";
 import "./styles.css";
+import 'katex/dist/katex.min.css';
+import Latex from 'react-latex-next';
 
 const ids = [
   "bde984b3-7e98-42ad-8650-bd08d9c64473",
@@ -101,52 +103,58 @@ export default function CrashCourse() {
   };
 
   return (
-    <div className="OuterWindow">
-      <div className="MainContainer">
-        <div className="ProgressBar">
-          {assignments.map((assignment, index) => (
-            <ProgressBar
-              totalItems={assignments.length > 0 ? assignments.length : 1}
-              key={assignment.getAssignment.id}
-              difficulty={assignment.getAssignment.difficultyScore}
-              current={currentIndex == index}
-              onClick={() => handleItemClick(index)}
-              correct={assignment.correct}
-              attempted={assignment.answered}
-            />
-          ))}
-        </div>
+      <div className="OuterWindow">
+        <div className="MainContainer">
+          <div className="ProgressBar">
+            {assignments.map((assignment, index) => (
+              <ProgressBar
+                totalItems={assignments.length > 0 ? assignments.length : 1}
+                key={assignment.getAssignment.id}
+                difficulty={assignment.getAssignment.difficultyScore}
+                current={currentIndex == index}
+                onClick={() => handleItemClick(index)}
+                correct={assignment.correct}
+                attempted={assignment.answered}
+              />
+            ))}
+          </div>
 
-        <div className="AssignmentContainer">
-          <span style={{ textAlign: "left", width: "100%" }}>
+          <div className="AssignmentContainer">
+            <Latex
+              style={{ textAlign: "left", width: "100%" }}
+
+            >
+                {
+                assignments.length > 0
+                  ? assignments[currentIndex].getAssignment.questionText
+                  : ""
+              }
+            </Latex>
+          </div>
+
+          <div className="OptionContainer">
             {assignments.length > 0
-              ? assignments[currentIndex].getAssignment.questionText
-              : ""}
-          </span>
-        </div>
-
-        <div className="OptionContainer">
-          {assignments.length > 0
-            ? assignments[currentIndex]?.getAssignment.answerOptions.map(
-                (option, index) => (
-                  <OptionPressable
-                    text={option.text}
-                    key={option.id}
-                    onClick={() => handleAnswerClick(index, option)}
-                    active={answerIndex == index}
-                  />
+              ? assignments[currentIndex]?.getAssignment.answerOptions.map(
+                  (option, index) => (
+                    <OptionPressable
+                      text={option.text}
+                      key={option.id}
+                      onClick={() => handleAnswerClick(index, option)}
+                      active={answerIndex == index}
+                    />
+                  )
                 )
-              )
-            : ""}
-        </div>
+              : ""}
+          </div>
 
-        <MainButton
-          prompt={"Check"}
-          onClick={() => {
-            handleAnswerCheck(answer);
-          }}
-        />
+          <MainButton
+            prompt={"Check"}
+            onClick={() => {
+              handleAnswerCheck(answer);
+            }}
+          />
+        </div>
       </div>
-    </div>
+
   );
 }
