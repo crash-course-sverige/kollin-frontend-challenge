@@ -8,6 +8,7 @@ import "katex/dist/katex.min.css";
 import Latex from "react-latex-next";
 import Title from "../components/Headers/Title";
 import Difficulty from "../components/Headers/Difficulty";
+import GameOverModal from "../components/Modal";
 
 const ids = [
   "bde984b3-7e98-42ad-8650-bd08d9c64473",
@@ -26,6 +27,7 @@ export default function CrashCourse() {
   const [answer, setAnswer] = useState(0);
   const [answerIndex, setAnswerIndex] = useState(0);
   const [lives, setLives] = useState(3);
+  const [showModal, setShowModal] = useState(false);
 
   async function getAssignments(assignmentId) {
     const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
@@ -90,6 +92,12 @@ export default function CrashCourse() {
     fetchAssignments();
   }, []);
 
+  useEffect(() => {
+    if (lives === 0) {
+      setShowModal(true);
+    }
+  }, [lives]);
+
   const handleProgressItemClick = (index) => {
     setCurrentIndex(index);
     setAnswerIndex(0);
@@ -102,9 +110,26 @@ export default function CrashCourse() {
 
   const handleAnswerCheck = (option) => {
     const correct = option.correct;
+    if (!correct) {
+      setLives(lives - 1);
+      if (lives === 0) {
+      }
+    }
     const updatedAssignments = [...assignments];
     updatedAssignments[currentIndex].answered = true;
     updatedAssignments[currentIndex].correct = correct;
+    setAssignments(updatedAssignments);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setLives(3);
+    setAnswerIndex(0);
+    const updatedAssignments = assignments.map((assignment) => ({
+      ...assignment,
+      correct: false,
+      attempted: false,
+    }));
     setAssignments(updatedAssignments);
   };
 
@@ -122,9 +147,20 @@ export default function CrashCourse() {
               onClick={() => handleProgressItemClick(index)}
               correct={assignment.correct}
               attempted={assignment.answered}
+              gameOver={lives === 0}
             />
           ))}
-          <div style={{display:"flex", flexDirection:"row"}}><span style={{}}>Heart</span> <span>{lives}</span></div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 5,
+            }}
+          >
+            <img src="Icon.svg" style={{ width: 24, height: 24 }} />
+            <span style={{ width: 10 }}>{lives}</span>
+          </div>
         </div>
 
         <div className="DifficultyContainer">
@@ -165,6 +201,7 @@ export default function CrashCourse() {
                     key={option.id}
                     onClick={() => handleAnswerClick(index, option)}
                     active={answerIndex == index}
+                    gameOver={lives == 0}
                   />
                 )
               )
@@ -176,8 +213,10 @@ export default function CrashCourse() {
           onClick={() => {
             handleAnswerCheck(answer);
           }}
+          gameOver={lives == 0}
         />
       </div>
+      {showModal && <GameOverModal onClose={handleCloseModal} />}
     </div>
   );
 }

@@ -5,6 +5,7 @@ export default function ProgressBar({
   correct,
   attempted,
   first,
+  gameOver
 }) {
   const progressBarWidth = 143;
   const itemWidth = progressBarWidth / totalItems;
@@ -22,6 +23,7 @@ export default function ProgressBar({
         outlineOffset: 2,
       }}
       onClick={onClick}
+      disabled ={gameOver}
     />
   );
 }

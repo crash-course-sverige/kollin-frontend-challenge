@@ -1,7 +1,7 @@
 import "katex/dist/katex.min.css";
 import Latex from "react-latex-next";
 import "./styles.css"
-export default function OptionPressable({ onClick, active, text }) {
+export default function OptionPressable({ onClick, active, text, gameOver }) {
   return (
     <button
       className="OptionPressable"
@@ -10,6 +10,7 @@ export default function OptionPressable({ onClick, active, text }) {
         backgroundColor: active ? "#E2E8F9" : "white"
       }}
       onClick={onClick}
+      disabled={gameOver}
     >
       <Latex>{text}</Latex>
     </button>
