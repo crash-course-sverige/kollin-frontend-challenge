@@ -1,0 +1,29 @@
+.MainButton{
+    width: 59%;
+    height: 48px;
+    outline: solid;
+    outline-width: thin;
+    border-radius: 8px;
+    background-color: #586FB5;
+    color: white;
+    transition: 0.7;
+}
+
+.MainButton:hover {
+    background-color: #3f5492;
+  }
+
+
+.OptionPressable {
+    width: 100%;
+    height: 56px;
+    outline: solid;
+    outline-width: 2px;
+    border-radius: 8px;
+    transition: 0.7;
+    background-color: white;
+  }
+
+.OptionPressable:hover {
+    background-color: #cbd1e3 !important; 
+  }

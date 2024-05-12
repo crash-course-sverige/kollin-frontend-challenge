@@ -25,6 +25,7 @@ export default function CrashCourse() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answer, setAnswer] = useState(0);
   const [answerIndex, setAnswerIndex] = useState(0);
+  const [lives, setLives] = useState(3);
 
   async function getAssignments(assignmentId) {
     const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
@@ -123,6 +124,7 @@ export default function CrashCourse() {
               attempted={assignment.answered}
             />
           ))}
+          <div style={{display:"flex", flexDirection:"row"}}><span style={{}}>Heart</span> <span>{lives}</span></div>
         </div>
 
         <div className="DifficultyContainer">

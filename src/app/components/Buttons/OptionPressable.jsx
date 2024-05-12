@@ -1,16 +1,13 @@
 import "katex/dist/katex.min.css";
 import Latex from "react-latex-next";
+import "./styles.css"
 export default function OptionPressable({ onClick, active, text }) {
   return (
     <button
+      className="OptionPressable"
       style={{
-        width: "100%",
-        height: 56,
-        outline: "solid",
-        outlineWidth: 2,
-        borderRadius: 8,
         outlineColor: active ? "#A8B9EE" : "#E7E5E4",
-        background: active ? "#E2E8F9" : "white",
+        backgroundColor: active ? "#E2E8F9" : "white"
       }}
       onClick={onClick}
     >
