@@ -7,6 +7,7 @@ import "./styles.css";
 import "katex/dist/katex.min.css";
 import Latex from "react-latex-next";
 import Title from "../components/Headers/Title";
+import Difficulty from "../components/Headers/Difficulty";
 
 const ids = [
   "bde984b3-7e98-42ad-8650-bd08d9c64473",
@@ -124,48 +125,25 @@ export default function CrashCourse() {
           ))}
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 12,
-            width:"59%"
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap:12 }}>
+        <div className="DifficultyContainer">
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <span>Question:</span>
             {currentIndex + 1}
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap:12 }}>
-            <span>Difficulty:</span>
-            <div
-              style={{
-                borderRadius: 50,
-                width: 40,
-                height: 40,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                background:
-                  assignments.length > 0
-                    ? scoreToColor[
-                        Math.round(
-                          assignments[currentIndex]?.getAssignment
-                            .difficultyScore
-                        )
-                      ]
-                    : "white",
-              }}
-            >
-              <span style={{ color: "white" }}>
-                {assignments.length > 0
-                  ? assignments[currentIndex].getAssignment.difficultyScore
-                  : 0}
-              </span>
-            </div>
-          </div>
+          <Difficulty
+            difficultyScore={
+              assignments[currentIndex]?.getAssignment.difficultyScore
+            }
+            color={
+              assignments.length > 0
+                ? scoreToColor[
+                    Math.round(
+                      assignments[currentIndex]?.getAssignment.difficultyScore
+                    )
+                  ]
+                : "white"
+            }
+          />
         </div>
 
         <div className="AssignmentContainer">
