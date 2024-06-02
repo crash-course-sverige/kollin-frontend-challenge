@@ -1,6 +1,5 @@
 import { Crimson_Text } from "next/font/google";
 import "./globals.css";
-import { Progressbar } from "@/components/Progressbar";
 
 const crimson = Crimson_Text({
   subsets: ["latin"],

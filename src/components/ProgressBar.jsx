@@ -16,7 +16,7 @@ const extractQuestionStatus = (assignment, userAnswerId) => {
   return "incorrect";
 };
 
-export const Progressbar = ({ assignments }) => {
+export const ProgressBar = ({ assignments }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const id = pathname.split("/")[2];

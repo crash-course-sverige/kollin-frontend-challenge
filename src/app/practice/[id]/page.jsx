@@ -1,9 +1,8 @@
-import Latex from "react-latex-next";
 import { getAssignment, getAssignments } from "@/services/assignmentApi";
 import { Assignment } from "../../../components/Assignment";
 
 import "katex/dist/katex.min.css";
-import { Progressbar } from "@/components/Progressbar";
+import { ProgressBar } from "@/components/ProgressBar";
 
 export default async function Page({ params }) {
   const assignment = await getAssignment(params.id);
@@ -17,7 +16,7 @@ export default async function Page({ params }) {
         Trigonometriska funktioner & identiteter
       </h1>
       <div className="bg-white text-black w-[888px] pl-[191px] pr-[191px] rounded-t-[5rem] p-8 mt-8 flex flex-col gap-8">
-        <Progressbar assignments={assignments} />
+        <ProgressBar assignments={assignments} />
         <Assignment assignment={assignment} nextAssignment={nextAssignment} />
       </div>
     </div>
